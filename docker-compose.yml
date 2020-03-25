@@ -2,15 +2,41 @@ version: '3'
 
 services:
   web:
-    build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
     container_name: biorhythm_web
+    build: ./frontend/gui
     volumes:
-      - .:/code
+      - '/app/node_modules'
+      - './frontend/gui:/app' 
+    ports:
+      - '3000:3000'
+    tty: true
+    networks:
+      biorhythm_connect:
+        ipv4_address: 172.28.0.2
+    depends_on:
+      - api
+  api:
+    build: ./backend/src
+    command: python3 manage.py runserver 0.0.0.0:8000
+    container_name: biorhythm_api
+    volumes:
+      - ./backend/src:/code
     ports:
       - "8000:8000"
+    networks:
+      biorhythm_connect:
+        ipv4_address: 172.28.0.3
     depends_on:
       - db
   db:
     container_name: biorhythm_db
     image: postgres
+    networks:
+      biorhythm_connect:
+        ipv4_address: 172.28.0.4
+networks:
+  biorhythm_connect:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
