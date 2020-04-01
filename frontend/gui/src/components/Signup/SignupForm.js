@@ -14,17 +14,17 @@ const SignupForm = (props) => {
                             <form>
 
                                 <div className="form-label-group">
-                                    <input name="email" onChange={props.emailHandler} type="email" id="inputEmail" className="form-control" placeholder="Email address" />
+                                    <input name="email" onChange={props.emailHandler} type="email" id="inputEmail" className="form-control" placeholder="Email address" required />
                                     <label htmlFor="inputEmail">Email address</label>
                                 </div>
 
                                 <div className="form-label-group">
-                                    <input name="firstname" onChange={props.fnameHandler} type="text" id="inputFirstname" className="form-control" placeholder="Firstname" required autoFocus />
+                                    <input name="firstname" onChange={props.fnameHandler} type="text" id="inputFirstname" className="form-control" placeholder="Firstname" required />
                                     <label htmlFor="inputFirstname">Firstname</label>
                                 </div>
 
                                 <div className="form-label-group">
-                                    <input name="lastname" onChange={props.lnameHandler} type="text" id="inputLastname" className="form-control" placeholder="Lastname" required autoFocus />
+                                    <input name="lastname" onChange={props.lnameHandler} type="text" id="inputLastname" className="form-control" placeholder="Lastname" required />
                                     <label htmlFor="inputLastname">Lastname</label>
                                 </div>
 
@@ -43,7 +43,7 @@ const SignupForm = (props) => {
                                 <hr />
 
                                 <div className="form-label-group">
-                                    <input name="birthdate" onChange={props.bdateHandler} type="date" id="inputBirthdate" className="form-control" required autoFocus />
+                                    <input name="birthdate" onChange={props.bdateHandler} type="date" id="inputBirthdate" className="form-control" required />
                                     <label htmlFor="inputBirthdate">Birthdate</label>
                                 </div>
 

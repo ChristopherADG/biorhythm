@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import SignupForm from '../../components/Signup/SignupForm'
+import { Redirect } from 'react-router-dom'
 
-const CREATE_USER_API_ROUTE = 'http://127.0.0.1:8000/api/users/create/'
+const CREATE_USER_API_ROUTE = 'http://localhost:8000/api/users/create/'
 
 class Signup extends Component {
 
@@ -13,11 +14,13 @@ class Signup extends Component {
         password: '',
         confPassword: '',
         birthdate: '',
+        redirect: false
     }
 
     render() {
         return (
             <div>
+                {this.renderRedirect()}
                 <SignupForm
                     emailHandler={this.changeEmail}
                     fnameHandler={this.changeFirstname}
@@ -25,20 +28,24 @@ class Signup extends Component {
                     pwordHandler={this.changePassword}
                     confpwordHandler={this.changeConfPassword}
                     bdateHandler={this.changeBirthdate}
-                    submitHandler={this.fakeUser}
+                    submitHandler={this.createUser}
                 />
             </div>
         );
     }
 
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/signin' />
+        }
+    }
+
     changeEmail = (event) => {
-        console.log("changeEmail called!!")
         const target = event.target;
         let _email = target.value;
         this.setState({
             email: _email
         })
-        console.log(_email)
     }
 
     changeFirstname = (event) => {
@@ -107,6 +114,7 @@ class Signup extends Component {
                         password: '',
                         confPassword: '',
                         birthdate: '',
+                        redirect: true
                     });
                 })
                 .catch(err => console.log(err));
@@ -116,15 +124,18 @@ class Signup extends Component {
     fakeUser = (event) => {
         event.preventDefault();
         axios.post(CREATE_USER_API_ROUTE, {
-            email: "nuevo@email.com",
+            email: "nuevo2@email.com",
             firstname: "Nuevo",
             lastname: "Lastnameee",
             password: "1234",
-            birthdate: "01-01-2020"
+            birthdate: "2020-01-01"
         })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
+                this.setState({
+                    redirect: true
+                })
             })
             .catch(err => console.log(err));
     }
