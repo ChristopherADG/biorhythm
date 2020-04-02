@@ -17,7 +17,12 @@ class Signin extends Component {
         return (
             <div>
                 {this.renderRedirect()}
-                <LoginForm emailHandler={this.changeEmail} pwordHandler={this.changePassword} submitHandler={this.loginUser} message={this.state.message} />
+                <LoginForm
+                    emailHandler={this.changeEmail}
+                    pwordHandler={this.changePassword}
+                    submitHandler={this.loginUser}
+                    message={this.state.message}
+                />
             </div>
         );
     }
@@ -55,7 +60,6 @@ class Signin extends Component {
                 password: this.state.password,
             })
                 .then(res => {
-                    console.log(res);
                     console.log(res.data);
                     this.setState({
                         redirect: res.data.redirect,

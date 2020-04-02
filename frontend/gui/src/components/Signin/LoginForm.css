@@ -12,7 +12,7 @@
 }
 
 .login-container form{
-    padding: 10%;
+    padding: 5% 10% 10% 10%;
 }
 .btnSubmit
 {
@@ -32,4 +32,8 @@
     color: #0062cc;
     font-weight: 600;
     text-decoration: none;
+}
+
+.error-text {
+    color: red;
 }

@@ -9,13 +9,13 @@ const LoginForm = (props) => {
                 <div className="col-md-3"></div>
                 <div className="col-md-6 login-form-1">
                     <h3>Login</h3>
-                    <p>{props.message}</p>
+                    <p className="error-text">{props.message}</p>
                     <form>
                         <div className="form-group">
-                            <input type="text" className="form-control" placeholder="Your Email *" onChange={props.emailHandler} />
+                            <input type="email" className="form-control" placeholder="Email *" onChange={props.emailHandler} required />
                         </div>
                         <div className="form-group">
-                            <input type="password" className="form-control" placeholder="Your Password *" onChange={props.pwordHandler} />
+                            <input type="password" className="form-control" placeholder="Password *" onChange={props.pwordHandler} required />
                         </div>
                         <div className="form-group">
                             <input type="submit" className="btnSubmit" value="Login" onClick={props.submitHandler} />
