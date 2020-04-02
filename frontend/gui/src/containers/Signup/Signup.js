@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import SignupForm from '../../components/Signup/SignupForm'
 import { Redirect } from 'react-router-dom'
-
-const CREATE_USER_API_ROUTE = 'http://localhost:8000/api/users/create/'
+import { CREATE_USER_API_ROUTE } from '../../util/constants'
 
 class Signup extends Component {
 

@@ -50,7 +50,7 @@ const SignupForm = (props) => {
                                 <hr className="my-4" />
 
                                 <input className="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="register" onClick={props.submitHandler} />
-                                <Link to='/signin' className="d-block text-center mt-2 small">Sign In</Link>
+                                <Link to='/login' className="d-block text-center mt-2 small">Sign In</Link>
 
                             </form>
                         </div>
