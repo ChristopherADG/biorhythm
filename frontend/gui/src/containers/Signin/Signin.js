@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom'
 import { LOGIN_USER_API_ROUTE } from '../../util/constants'
 import LoginForm from '../../components/Signin/LoginForm';
+import SessionHandler from '../../util/sessions'
 
 class Signin extends Component {
 
@@ -28,7 +29,7 @@ class Signin extends Component {
     }
 
     renderRedirect = () => {
-        if (this.state.redirect) {
+        if (this.state.redirect || SessionHandler.isAuthInStorage()) {
             return <Redirect to='/' />
         }
     }
@@ -65,6 +66,9 @@ class Signin extends Component {
                         redirect: res.data.redirect,
                         message: res.data.message
                     });
+                    if (res.data.redirect) {
+                        SessionHandler.setAuthInStorage()
+                    }
                 })
                 .catch(err => console.log(err));
         }
