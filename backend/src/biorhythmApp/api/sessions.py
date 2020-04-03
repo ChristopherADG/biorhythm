@@ -8,13 +8,14 @@ from django.contrib.auth import logout
 
 
 SESSION_ID = 'biorhythm'
+COOKIE_KEY = 'bio'
 LOGGED_IN = 'logged in'
 LOGGED_OUT = 'not logged in'
 ERROR_INVALID_CREDENTIALS = {'success': False, "redirect": False, 'message': 'Invalid email or password'}
 
 
 def is_logged_in(request):
-    if 'biorhythm' in request.session:
+    if SESSION_ID in request.session:
         return True
     return False
 
@@ -47,7 +48,9 @@ class LoginView(APIView):
                 'lastname': user_requested.lastname,
                 'email': user_requested.email
             }
-            return Response({"success": True, "redirect": True, "message": LOGGED_IN})
+            res = Response({"success": True, "redirect": True, "message": LOGGED_IN})
+            res.set_cookie(COOKIE_KEY, 'value')
+            return res
         return Response(ERROR_INVALID_CREDENTIALS)
 
 
@@ -62,5 +65,7 @@ class LogoutView(APIView):
                 logout(request)
             except KeyError:
                 pass
-            return Response({"success": True, "redirect": True, "message": LOGGED_OUT})
-        return Response({"success": True, "redirect": False, "message": LOGGED_OUT})
+
+        res = Response({"success": True, "redirect": True, "message": LOGGED_OUT})
+        res.delete_cookie(COOKIE_KEY)
+        return res
