@@ -1,5 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { LOGOUT_USER_API_ROUTE } from '../../util/constants'
+import SessionHandler from '../../util/sessions'
+
+const logout = () => {
+    axios.get(LOGOUT_USER_API_ROUTE)
+        .then(res => {
+            SessionHandler.clearAuthInStorage()
+        })
+        .catch(err => console.log(err));
+}
 
 const MenuIn = () => {
     return (
@@ -23,7 +34,7 @@ const MenuIn = () => {
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <Link to='/profile' className="dropdown-item">Profile</Link>
-                                <Link to='/logout' className="dropdown-item">Log out</Link>
+                                <Link to='/login' className="dropdown-item" onClick={logout}>Log out</Link>
                             </div>
                         </li>
                     </ul>
