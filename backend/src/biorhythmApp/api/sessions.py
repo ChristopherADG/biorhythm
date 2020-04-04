@@ -20,6 +20,17 @@ def is_logged_in(request):
     return False
 
 
+def get_logged_user(request):
+    if is_logged_in(request):
+        email = request.session[SESSION_ID].get('email')
+        try:
+            user_requested = User.objects.get(email__exact=email)
+        except ObjectDoesNotExist:
+            return None
+        return user_requested
+    return None
+
+
 class LoginView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = (permissions.AllowAny,)
@@ -59,7 +70,7 @@ class LogoutView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request, format=None):
-        if 'biorhythm' in request.session:
+        if SESSION_ID in request.session:
             try:
                 del request.session[SESSION_ID]
                 logout(request)
