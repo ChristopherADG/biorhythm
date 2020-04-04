@@ -14,6 +14,10 @@ class Signin extends Component {
         message: ''
     }
 
+    componentDidMount() {
+        this.renderRedirect()
+    }
+
     render() {
         return (
             <div>
@@ -29,7 +33,7 @@ class Signin extends Component {
     }
 
     renderRedirect = () => {
-        if (this.state.redirect || SessionHandler.isAuthInStorage()) {
+        if (this.state.redirect) {
             return <Redirect to='/' />
         }
     }

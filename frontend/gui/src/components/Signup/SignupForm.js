@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './SignupForm.css';
+import { LOGIN_LINK } from '../../util/constants'
 
 const SignupForm = (props) => {
     return (
@@ -50,7 +51,7 @@ const SignupForm = (props) => {
                                 <hr className="my-4" />
 
                                 <input className="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="register" onClick={props.submitHandler} />
-                                <Link to='/login' className="d-block text-center mt-2 small">Sign In</Link>
+                                <Link to={LOGIN_LINK} className="d-block text-center mt-2 small">Log in</Link>
 
                             </form>
                         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './LoginForm.css';
+import { SIGNUP_LINK } from '../../util/constants'
 
 const LoginForm = (props) => {
     return (
@@ -21,7 +22,7 @@ const LoginForm = (props) => {
                             <input type="submit" className="btnSubmit" value="Login" onClick={props.submitHandler} />
                         </div>
                         <div className="form-group">
-                            <Link to='/signup' className="ForgetPwd">Sign up</Link>
+                            <Link to={SIGNUP_LINK} className="ForgetPwd">Sign up</Link>
                         </div>
                     </form>
                 </div>
