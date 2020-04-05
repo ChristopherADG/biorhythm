@@ -1,5 +1,4 @@
 import React from 'react';
-import './EventsBox.css'
 import EventElement from './EventElement/EventElement';
 
 
