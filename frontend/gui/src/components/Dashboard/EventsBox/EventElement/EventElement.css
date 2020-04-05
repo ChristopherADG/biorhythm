@@ -1,0 +1,27 @@
+.round-square {
+    padding: 0 7px;
+    height: 36px;
+    background-color: #bbb;
+    border-radius: 15%;
+    display: inline-block;
+    color: #FFF;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.element {
+    border-top: 1px solid #F8F7F8;
+    padding-top: 5px;
+}
+
+.element div p {
+    margin: 0;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.color-purple {
+    background-color: #A88CD8;
+}
