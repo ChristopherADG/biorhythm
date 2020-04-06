@@ -6,13 +6,16 @@ import './Dashboard.css'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import EventsBox from '../../components/Dashboard/EventsBox/EventsBox';
 import SessionHandler from '../../util/sessions'
+import BigGraphBox from '../../components/Dashboard/BigGraphBox/BigGraphBox';
 
 class Dashboard extends Component {
 
     state = {
         myBiorhythm: {},
+        listBioRhythm: [],
         tempDate: '',
-        dateStr: 'Today'
+        dateStr: 'Today',
+        bigChartData: {}
     }
 
     componentDidMount() {
@@ -22,6 +25,21 @@ class Dashboard extends Component {
                 this.setState({
                     myBiorhythm: res.data
                 })
+            })
+            .catch(err => console.log(err));
+
+        axios.get(CALC_BIO_API_ROUTE + `/${SessionHandler.getStorageValue()}`, {
+            params: {
+                range: 15,
+                limit: 5
+            }
+        })
+            .then(res => {
+                console.log(res.data);
+                this.setState({
+                    listBioRhythm: res.data
+                })
+                this.prepareListData()
             })
             .catch(err => console.log(err));
     }
@@ -48,13 +66,56 @@ class Dashboard extends Component {
                     </div>
                     <div className="row">
                         <div className="col">
-                            <SingleBioBox />
+                            <BigGraphBox data={this.state.bigChartData} dateString={this.state.myBiorhythm.target_date_str} />
                         </div>
                     </div>
                 </div>
 
             </div>
         );
+    }
+
+
+    prepareListData() {
+        let data = { phy: [], emo: [], int: [], date: [] }
+        this.state.listBioRhythm.forEach(bio => {
+            data.phy.push(bio.phy)
+            data.emo.push(bio.emo)
+            data.int.push(bio.int)
+            data.date.push(bio.target_date_str.slice(5))
+        })
+
+        let bigChartData = {
+            labels: data.date,
+            datasets: [{
+                label: 'Physical',
+                fill: false,
+                data: data.phy,
+                borderColor: ['rgb(168, 140, 216)'],
+                pointBackgroundColor: 'rgb(168, 140, 216)',
+                borderWidth: 2
+            },
+            {
+                label: 'Emotional',
+                fill: false,
+                data: data.emo,
+                borderColor: ['rgb(15,195,171)'],
+                pointBackgroundColor: 'rgb(15,195,171)',
+                borderWidth: 2
+            },
+            {
+                label: 'Intellectual',
+                fill: false,
+                data: data.int,
+                borderColor: ['rgb(249,193,5)'],
+                pointBackgroundColor: 'rgb(249,193,5)',
+                borderWidth: 2
+            }]
+        }
+
+        this.setState({
+            bigChartData: bigChartData
+        })
     }
 
 
