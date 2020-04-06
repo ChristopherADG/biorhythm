@@ -31,6 +31,14 @@ def get_logged_user(request):
     return None
 
 
+def get_user_by_email(email):
+    try:
+        user_requested = User.objects.get(email__exact=email)
+    except ObjectDoesNotExist:
+        return None
+    return user_requested
+
+
 class LoginView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = (permissions.AllowAny,)

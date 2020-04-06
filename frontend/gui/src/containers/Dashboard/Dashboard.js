@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom'
 import { CALC_BIO_API_ROUTE } from '../../util/constants'
 import SingleBioBox from '../../components/Dashboard/SingleBioBox/SingleBioBox';
 import './Dashboard.css'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import EventsBox from '../../components/Dashboard/EventsBox/EventsBox';
+import SessionHandler from '../../util/sessions'
 
 class Dashboard extends Component {
 
     componentDidMount() {
-        axios.get(CALC_BIO_API_ROUTE)
+        axios.get(CALC_BIO_API_ROUTE + `/${SessionHandler.getStorageValue()}`)
             .then(res => {
                 console.log(res.data);
             })
@@ -23,7 +23,7 @@ class Dashboard extends Component {
                 <TitleBar title="Dashboard" />
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col">
                             <SingleBioBox />
                         </div>
                         <div className="col-md-8">

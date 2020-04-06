@@ -4,16 +4,16 @@ from rest_framework.views import APIView
 from rest_framework import permissions, status
 from datetime import datetime, timedelta
 import math
-from .sessions import get_logged_user
+from .sessions import get_user_by_email
 
 
 class BioView(APIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request):
+    def get(self, request, email=''):
 
-        user = get_logged_user(request)
+        user = get_user_by_email(email)
         if not user:
             return Response({'error': "Can't find user or you are not logged in"}, status=status.HTTP_401_UNAUTHORIZED)
 

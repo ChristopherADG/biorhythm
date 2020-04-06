@@ -6,7 +6,7 @@
 
 **REQUEST:** GET
 
-**ROUTE:** `/api/biocalc`
+**ROUTE:** `/api/biocalc/<email>`
 
 **PRECONDITIONS:** User must be logged in
 

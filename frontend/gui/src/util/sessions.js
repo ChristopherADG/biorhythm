@@ -2,9 +2,9 @@ import { COOKIE_FLAG_KEY } from './constants'
 
 
 class SessionHandler {
-    static setAuthInStorage() {
+    static setAuthInStorage(email) {
         if (!localStorage.getItem(COOKIE_FLAG_KEY)) {
-            localStorage.setItem(COOKIE_FLAG_KEY, 'value');
+            localStorage.setItem(COOKIE_FLAG_KEY, email);
         }
     }
 
@@ -19,6 +19,10 @@ class SessionHandler {
             return true
         }
         return false
+    }
+
+    static getStorageValue() {
+        return localStorage.getItem(COOKIE_FLAG_KEY)
     }
 }
 
