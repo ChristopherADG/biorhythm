@@ -1,6 +1,15 @@
 from django.urls import path
-from .views import UserListView, UserDetailView, UserCreateView, EventListView, EventDetailView, EventCreateView, EventUpdateView
+from .views import (
+    UserListView,
+    UserDetailView,
+    UserCreateView,
+    EventListView,
+    EventDetailView,
+    EventCreateView,
+    EventUpdateView
+)
 from .sessions import LoginView, LogoutView
+from .calc import BioView
 
 urlpatterns = [
     path('users/', UserListView.as_view()),
@@ -13,4 +22,5 @@ urlpatterns = [
     path('events/<pk>', EventDetailView.as_view()),
     path('events/create/', EventCreateView.as_view()),
     path('events/<pk>/update/', EventUpdateView.as_view()),
+    path('biocalc', BioView.as_view()),
 ]
