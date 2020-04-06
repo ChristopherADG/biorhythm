@@ -21,7 +21,6 @@ class Dashboard extends Component {
     componentDidMount() {
         axios.get(CALC_BIO_API_ROUTE + `/${SessionHandler.getStorageValue()}`)
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     myBiorhythm: res.data
                 })
@@ -35,7 +34,6 @@ class Dashboard extends Component {
             }
         })
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     listBioRhythm: res.data
                 })
@@ -140,7 +138,6 @@ class Dashboard extends Component {
                 }
             })
                 .then(res => {
-                    console.log(res.data);
                     this.setState({
                         myBiorhythm: res.data,
                         dateStr: this.state.tempDate
