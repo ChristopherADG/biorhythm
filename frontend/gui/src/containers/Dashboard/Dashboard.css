@@ -2,3 +2,37 @@ body {
     background-color: #F6F5F6;
     font-family: 'Lato', sans-serif;
 }
+
+.box {
+    margin: 5px;
+    background-color: #FFFFFF;
+    border: 1px solid #F8F7F8;
+    min-height: 263px
+}
+
+.bio-label {
+    text-align: left;
+}
+
+.inner-content {
+    margin: 10px;
+}
+
+.subtitle {
+    color: #ACACAC;
+    font-size: .9em;
+}
+
+.color-purple {
+    background-color: #A88CD8;
+}
+
+.color-green {
+    background-color: #0FC3AB;
+}
+
+.color-yellow {
+    background-color: #F9C105;
+}
+
+button:focus {outline:0;}

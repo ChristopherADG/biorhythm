@@ -38,7 +38,7 @@ const BigGraphBox = (props) => {
     return (
         <div className="charBox">
             <div className="container">
-                <div id="chart-content" className="inner-content">
+                <div className="inner-content">
                     <div className="row">
                         <h5>15 Day Graph</h5>
                     </div>
