@@ -9,10 +9,19 @@ import SessionHandler from '../../util/sessions'
 
 class Dashboard extends Component {
 
+    state = {
+        myBiorhythm: {},
+        tempDate: '',
+        dateStr: 'Today'
+    }
+
     componentDidMount() {
         axios.get(CALC_BIO_API_ROUTE + `/${SessionHandler.getStorageValue()}`)
             .then(res => {
                 console.log(res.data);
+                this.setState({
+                    myBiorhythm: res.data
+                })
             })
             .catch(err => console.log(err));
     }
@@ -24,9 +33,16 @@ class Dashboard extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col">
-                            <SingleBioBox />
+                            <SingleBioBox
+                                phy={this.toPercent(this.state.myBiorhythm.phy)}
+                                emo={this.toPercent(this.state.myBiorhythm.emo)}
+                                inte={this.toPercent(this.state.myBiorhythm.int)}
+                                dateString={this.state.dateStr}
+                                changeDateHandler={this.changeDateHandler}
+                                submitNewDate={this.reloadSingleBioBox}
+                            />
                         </div>
-                        <div className="col-md-8">
+                        <div className="col-lg-8">
                             <EventsBox />
                         </div>
                     </div>
@@ -39,6 +55,38 @@ class Dashboard extends Component {
 
             </div>
         );
+    }
+
+
+    toPercent(num) {
+        return parseInt(num * 100)
+    }
+
+    changeDateHandler = (event) => {
+        const target = event.target;
+        let date = target.value;
+        this.setState({
+            tempDate: date
+        })
+    }
+
+    reloadSingleBioBox = (event) => {
+        event.preventDefault();
+        if (this.state.tempDate !== '') {
+            axios.get(CALC_BIO_API_ROUTE + `/${SessionHandler.getStorageValue()}`, {
+                params: {
+                    target_date: this.state.tempDate
+                }
+            })
+                .then(res => {
+                    console.log(res.data);
+                    this.setState({
+                        myBiorhythm: res.data,
+                        dateStr: this.state.tempDate
+                    })
+                })
+                .catch(err => console.log(err));
+        }
     }
 
 
