@@ -1,0 +1,36 @@
+.small-box {
+    min-width: 230px;
+}
+
+.margin-left {
+    margin-left: 10px;
+}
+
+.margin-top {
+    margin-top: 10px;
+}
+
+.circle {
+    height: 20px;
+    width: 20px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
+#datepicker {
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1.1rem;
+    display: block;
+}
+
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+}
+[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}

@@ -68,10 +68,11 @@ class Signin extends Component {
                     console.log(res.data);
                     this.setState({
                         redirect: res.data.redirect,
-                        message: res.data.message
+                        message: res.data.message,
+                        password: ''
                     });
                     if (res.data.redirect) {
-                        SessionHandler.setAuthInStorage()
+                        SessionHandler.setAuthInStorage(this.state.email)
                     }
                 })
                 .catch(err => console.log(err));
