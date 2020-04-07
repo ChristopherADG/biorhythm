@@ -5,10 +5,12 @@ import SingleBioBox from '../../components/Dashboard/SingleBioBox/SingleBioBox';
 import './Dashboard.css'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import EventsBox from '../../components/Dashboard/EventsBox/EventsBox';
-import SessionHandler from '../../util/sessions'
 import BigGraphBox from '../../components/Dashboard/BigGraphBox/BigGraphBox';
+import UserContext from '../../context/user-context'
+import { withRouter } from 'react-router-dom'
 
 class Dashboard extends Component {
+    static contextType = UserContext
 
     state = {
         myBiorhythm: {},
@@ -19,7 +21,14 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        axios.get(CALC_BIO_API_ROUTE + `/${SessionHandler.getStorageValue()}`)
+
+        const { state } = this.context
+
+        if (state.user.email === undefined) {
+            return
+        }
+
+        axios.get(CALC_BIO_API_ROUTE + `/${state.user.email}`)
             .then(res => {
                 this.setState({
                     myBiorhythm: res.data
@@ -27,7 +36,7 @@ class Dashboard extends Component {
             })
             .catch(err => console.log(err));
 
-        axios.get(CALC_BIO_API_ROUTE + `/${SessionHandler.getStorageValue()}`, {
+        axios.get(CALC_BIO_API_ROUTE + `/${state.user.email}`, {
             params: {
                 range: 15,
                 limit: 5
@@ -43,12 +52,34 @@ class Dashboard extends Component {
     }
 
     render() {
+
+        const { state } = this.context
+
+        if (state.user.id === undefined) {
+            this.props.history.push('/login')
+        }
         return (
             <div>
                 <TitleBar title="Dashboard" />
                 <div className="container">
                     <div className="row">
-                        <div className="col">
+                        <div className="col-lg-4">
+                            <div className="box small-box">
+                                <div className="container">
+                                    <div className="inner-content">
+                                        <div className="">
+                                            <h4>Welcome!</h4>
+                                            <hr />
+                                            <h6>{state.user.name + ' ' + state.user.lastname}</h6>
+                                            <h6>{state.user.email}</h6>
+                                            <h6>{state.user.birthdate}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="col-lg-4">
                             <SingleBioBox
                                 phy={this.toPercent(this.state.myBiorhythm.phy)}
                                 emo={this.toPercent(this.state.myBiorhythm.emo)}
@@ -131,8 +162,9 @@ class Dashboard extends Component {
 
     reloadSingleBioBox = (event) => {
         event.preventDefault();
+        const { state } = this.context
         if (this.state.tempDate !== '') {
-            axios.get(CALC_BIO_API_ROUTE + `/${SessionHandler.getStorageValue()}`, {
+            axios.get(CALC_BIO_API_ROUTE + `/${state.user.email}`, {
                 params: {
                     target_date: this.state.tempDate
                 }
@@ -150,4 +182,4 @@ class Dashboard extends Component {
 
 }
 
-export default Dashboard;
+export default withRouter(Dashboard);
