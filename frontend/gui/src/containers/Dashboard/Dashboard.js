@@ -64,22 +64,6 @@ class Dashboard extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-4">
-                            <div className="box small-box">
-                                <div className="container">
-                                    <div className="inner-content">
-                                        <div className="">
-                                            <h4>Welcome!</h4>
-                                            <hr />
-                                            <h6>{state.user.name + ' ' + state.user.lastname}</h6>
-                                            <h6>{state.user.email}</h6>
-                                            <h6>{state.user.birthdate}</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div className="col-lg-4">
                             <SingleBioBox
                                 phy={this.toPercent(this.state.myBiorhythm.phy)}
                                 emo={this.toPercent(this.state.myBiorhythm.emo)}

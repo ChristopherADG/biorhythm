@@ -1,87 +1,133 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './Profile.css'
 import TitleBar from '../../components/TitleBar/TitleBar';
+import UserContext from '../../context/user-context'
+import { USER_API_GET } from '../../util/constants'
+import ViewProfile from '../../components/Profile/ViewProfile';
+import EditProfile from '../../components/Profile/EditProfile';
 
 
 class Profile extends Component {
+    static contextType = UserContext
 
     state = {
-        loggedIn: false
+        loggedIn: false,
+        editedFirstname: '',
+        editedLastname: '',
+        editedBirthdate: ''
     }
 
     componentDidMount() {
 
+        const { state } = this.context
+
+        if (state.user.email === undefined) {
+            return
+        }
+
+        this.setState({
+            editedFirstname: this.context.state.user.name,
+            editedLastname: this.context.state.user.lastname,
+            editedBirthdate: this.context.state.user.birthdate
+        })
+
     }
 
     render() {
+
+        const { state } = this.context
+
+        if (state.user.id === undefined) {
+            this.props.history.push('/login')
+        }
+
         return (
 
             <div>
                 <TitleBar title="Profile" />
                 <div className="container">
-                    <div id="read-only-profile" className="slim-box">
-                        <div className="row inner-content-profile">
-                            <div className="col-md-4">
-                                <div id="profileCircle"></div>
-                            </div>
-                            <div className="col inner-content-profile">
-                                <div className="row">
-                                    <span id="name">Klaus Chotomate</span>
-                                </div>
-                                <div className="row">
-                                    <span id="email">klaus@mail.com</span>
-                                </div>
-                                <div className="row">
-                                    <span id="date">1998-08-19</span>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <button type="button" className="btn btn-outline-primary" onClick={this.onEditClicked}>Edit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="write-only-profile" className="slim-box">
-                        <div className="row inner-content-profile">
-                            <div className="col-md-4">
-                                <div id="profileCircle"></div>
-                            </div>
-                            <div className="col inner-content-profile">
-                                <div className="row">
-                                    <div className="input-group mb-3">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text" id="basic-addon1">Name</span>
-                                        </div>
-                                        <input className="text form-control" value="Klaus Kientzle" aria-describedby="basic-addon1" />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="input-group mb-3">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text" id="basic-addon1">Email</span>
-                                        </div>
-                                        <input className="email form-control" value="klaus@mail.com" aria-describedby="basic-addon1" />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="input-group input-group-sm mb-3">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text" id="inputGroup-sizing-sm">Date</span>
-                                        </div>
-                                        <input id="datepicker" type="date" className="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-                                    </div>
-                                </div>
-                                <br />
-                                <div className="row">
-                                    <button type="button" className="btn btn-outline-danger" onClick={this.onUpdateClicked}>Update</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ViewProfile
+                        fname={this.state.editedFirstname}
+                        lname={this.state.editedLastname}
+                        email={state.user.email}
+                        bdate={this.state.editedBirthdate}
+                        onEditClicked={this.onEditClicked}
+                    />
+                    <EditProfile
+                        fname={state.user.name}
+                        lname={state.user.lastname}
+                        bdate={state.user.birthdate}
+                        onChangeFirstname={this.changeFirstname}
+                        onChangeLastname={this.changeLastname}
+                        onChangeBirthdate={this.changeBirthdate}
+                        updateUserHandler={this.updateUser}
+                        onUpdateClicked={this.onUpdateClicked}
+                    />
                 </div>
             </div>
 
         );
+    }
+
+    updateUser = (event) => {
+        const { state } = this.context
+
+        event.preventDefault();
+        if (this.state.editedFirstname === '' || this.state.editedLastname === ''
+            || this.state.editedBirthdate === '') {
+            alert('No field should be empty')
+            return;
+        } else {
+            axios.put(USER_API_GET + `${state.user.id}/update/`, {
+                firstname: this.state.editedFirstname,
+                lastname: this.state.editedLastname,
+                birthdate: this.state.editedBirthdate
+            })
+                .then(res => {
+                    console.log(res);
+                    console.log(res.data);
+                    this.onUpdateClicked();
+                    this.updateContextUser();
+                })
+                .catch(err => console.log(err));
+        }
+    }
+
+    updateContextUser() {
+        const { state, setUser } = this.context
+        let user = {
+            name: this.state.editedFirstname,
+            lastname: this.state.editedLastname,
+            email: state.user.email,
+            id: state.user.id,
+            birthdate: this.state.editedBirthdate
+        }
+        setUser(user);
+    }
+
+    changeFirstname = (event) => {
+        const target = event.target;
+        let _fname = target.value;
+        this.setState({
+            editedFirstname: _fname
+        })
+    }
+
+    changeLastname = (event) => {
+        const target = event.target;
+        let _lname = target.value;
+        this.setState({
+            editedLastname: _lname
+        })
+    }
+
+    changeBirthdate = (event) => {
+        const target = event.target;
+        let _date = target.value;
+        this.setState({
+            editedBirthdate: _date
+        })
     }
 
     onUpdateClicked() {
