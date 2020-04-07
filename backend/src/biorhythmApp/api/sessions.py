@@ -11,7 +11,8 @@ SESSION_ID = 'biorhythm'
 COOKIE_KEY = 'bio'
 LOGGED_IN = 'logged in'
 LOGGED_OUT = 'not logged in'
-ERROR_INVALID_CREDENTIALS = {'success': False, "redirect": False, 'message': 'Invalid email or password'}
+ERROR_INVALID_CREDENTIALS = {
+    'success': False, "redirect": False, 'message': 'Invalid email or password'}
 
 
 def is_logged_in(request):
@@ -67,7 +68,16 @@ class LoginView(APIView):
                 'lastname': user_requested.lastname,
                 'email': user_requested.email
             }
-            res = Response({"success": True, "redirect": True, "message": LOGGED_IN})
+            user = {
+                'name': user_requested.firstname,
+                'lastname': user_requested.lastname,
+                'email': user_requested.email,
+                'id': user_requested.id,
+                'birthdate': user_requested.birthdate
+            }
+
+            res = Response(
+                {"success": True, "redirect": True, "message": LOGGED_IN, "user": user})
             res.set_cookie(COOKIE_KEY, 'value')
             return res
         return Response(ERROR_INVALID_CREDENTIALS)
@@ -85,6 +95,7 @@ class LogoutView(APIView):
             except KeyError:
                 pass
 
-        res = Response({"success": True, "redirect": True, "message": LOGGED_OUT})
+        res = Response(
+            {"success": True, "redirect": True, "message": LOGGED_OUT})
         res.delete_cookie(COOKIE_KEY)
         return res

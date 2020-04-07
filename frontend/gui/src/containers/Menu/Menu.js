@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SessionHandler from '../../util/sessions'
 import MenuOut from '../../components/MenuLoggedOut/MenuOut';
 import MenuIn from '../../components/MenuLoggedIn/MenuIn';
+import UserContext from '../../context/user-context'
 
 // EXAMPLE CLASS
 // must separate logged in views and MenuIN
@@ -21,8 +22,8 @@ class Menu extends Component {
         }
     }
 
-    getMenu() {
-        if (SessionHandler.isAuthInStorage()) {
+    getMenu(user) {
+        if (user.id !== undefined) {
             return <MenuIn switchHandler={this.switchMenu} />
         } else {
             return <MenuOut switchHandler={this.switchMenu} />
@@ -37,9 +38,14 @@ class Menu extends Component {
 
     render() {
         return (
-            <div>
-                {this.getMenu()}
-            </div>
+            <UserContext.Consumer>
+                {(context) => (
+                    <div>
+                        {this.getMenu(context.state.user)}
+                    </div>
+                )}
+            </UserContext.Consumer>
+
         );
     }
 
