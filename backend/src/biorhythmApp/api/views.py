@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView
 from rest_framework import permissions
 from biorhythmApp.models import User, Event
-from .serializers import UserSerializer, EventSerializer
+from .serializers import UserSerializer, EventSerializer, SimpleUserSerializer
 
 
 # USER
@@ -23,7 +23,7 @@ class UserCreateView(CreateAPIView):
 
 class UserUpdateView(UpdateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = SimpleUserSerializer
     permission_classes = (permissions.AllowAny,)
 
 

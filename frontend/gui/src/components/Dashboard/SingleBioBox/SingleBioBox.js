@@ -40,7 +40,7 @@ const SingleBioBox = (props) => {
                                 <span className="input-group-text" id="inputGroup-sizing-sm">Date</span>
                             </div>
                             <input id="datepicker" type="date" onChange={props.changeDateHandler} className="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
-                            <div className="input-group-prepend">
+                            <div className="input-group-append">
                                 <button className="input-group-text" onClick={props.submitNewDate}>
                                     <span>
                                         <svg className="bi bi-arrow-clockwise" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

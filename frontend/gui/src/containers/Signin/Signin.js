@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Redirect } from 'react-router-dom'
-import { LOGIN_USER_API_ROUTE } from '../../util/constants'
+import { withRouter } from 'react-router-dom'
 import LoginForm from '../../components/Signin/LoginForm';
 import SessionHandler from '../../util/sessions'
 
+import UserContext from '../../context/user-context'
+
 class Signin extends Component {
+    static contextType = UserContext
 
     state = {
         email: '',
@@ -14,14 +15,15 @@ class Signin extends Component {
         message: ''
     }
 
-    componentDidMount() {
-        this.renderRedirect()
-    }
-
     render() {
+        const { state } = this.context
+
+        if (state.user.id !== undefined) {
+            this.props.history.push('/dashboard')
+        }
         return (
+
             <div>
-                {this.renderRedirect()}
                 <LoginForm
                     emailHandler={this.changeEmail}
                     pwordHandler={this.changePassword}
@@ -30,12 +32,6 @@ class Signin extends Component {
                 />
             </div>
         );
-    }
-
-    renderRedirect = () => {
-        if (this.state.redirect) {
-            return <Redirect to='/' />
-        }
     }
 
     changeEmail = (event) => {
@@ -56,29 +52,25 @@ class Signin extends Component {
 
     loginUser = (event) => {
         event.preventDefault();
+        const { login } = this.context
         if (this.state.email === '' || this.state.password === '') {
             alert('No field should be empty');
             return;
         } else {
-            axios.post(LOGIN_USER_API_ROUTE, {
-                email: this.state.email,
-                password: this.state.password,
-            })
-                .then(res => {
-                    console.log(res.data);
+            login(this.state.email, this.state.password).then((id) => {
+                if (id) {
+                    SessionHandler.setAuthInStorage(id)
+                    this.props.history.push('/dashboard')
+                } else {
                     this.setState({
-                        redirect: res.data.redirect,
-                        message: res.data.message,
-                        password: ''
+                        message: "Invalid email or password"
                     });
-                    if (res.data.redirect) {
-                        SessionHandler.setAuthInStorage(this.state.email)
-                    }
-                })
-                .catch(err => console.log(err));
+                }
+            })
+
         }
     }
 
 }
 
-export default Signin;
+export default withRouter(Signin);
