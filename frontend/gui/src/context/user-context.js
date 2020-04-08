@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { LOGIN_USER_API_ROUTE, LOGOUT_USER_API_ROUTE, USER_API_GET } from '../util/constants'
+import { LOGIN_USER_API_ROUTE, LOGOUT_USER_API_ROUTE, USER_API_GET, API_URL } from '../util/constants'
 import SessionHandler from '../util/sessions'
 
 const UserContext = React.createContext();
@@ -22,7 +22,7 @@ class UserProvider extends Component {
                             email: res.data.email,
                             id: id,
                             birthdate: res.data.birthdate,
-                            picture: res.data.picture
+                            picture: API_URL + res.data.picture
                         }
                     })
                 })
@@ -37,10 +37,13 @@ class UserProvider extends Component {
         })
             .then(res => {
                 if (res.data.success) {
+                    let temp = res.data.user
+                    temp.picture = API_URL + temp.picture
+                    console.log(temp)
                     this.setState({
-                        user: res.data.user
+                        user: temp
                     })
-                    return res.data.user.id
+                    return temp.id
                 } else {
                     return false
                 }
