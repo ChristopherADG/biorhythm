@@ -11,6 +11,7 @@ from .views import (
 )
 from .sessions import LoginView, LogoutView
 from .calc import BioView
+from .uploads import ImageUploadView
 
 urlpatterns = [
     path('users/', UserListView.as_view()),
@@ -24,4 +25,5 @@ urlpatterns = [
     path('events/create/', EventCreateView.as_view()),
     path('events/<pk>/update/', EventUpdateView.as_view()),
     path('biocalc/<str:email>', BioView.as_view()),
+    path('image/<int:pk>/', ImageUploadView.as_view()),
 ]

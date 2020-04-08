@@ -1,12 +1,18 @@
 import React from 'react';
 
+const getFile = () => {
+    document.getElementById("avatar").click();
+}
 
 const EditProfile = (props) => {
     return (
         <div id="write-only-profile" className="slim-box">
             <div className="row inner-content-profile">
                 <div className="col-md-4">
-                    <div id="profileCircle"></div>
+                    <div className="row">
+                        <img id="editable-img" className="profileCircle" src={props.profilePicture} alt="avatar" onClick={getFile} />
+                        <div className="middle-overlay"></div>
+                    </div>
                 </div>
                 <div className="col inner-content-profile">
                     <div className="row">
@@ -36,7 +42,9 @@ const EditProfile = (props) => {
                     <br />
                     <div className="row">
                         <button type="button" className="btn btn-outline-danger" onClick={props.updateUserHandler}>Update</button>
+                        <span className="space"></span>
                         <button type="button" className="btn btn-outline-primary" onClick={props.onUpdateClicked}>Cancel</button>
+                        <input onChange={props.onChangePicture} type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
                     </div>
                 </div>
             </div>

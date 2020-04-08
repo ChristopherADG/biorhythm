@@ -21,7 +21,8 @@ class UserProvider extends Component {
                             lastname: res.data.lastname,
                             email: res.data.email,
                             id: id,
-                            birthdate: res.data.birthdate
+                            birthdate: res.data.birthdate,
+                            picture: res.data.picture
                         }
                     })
                 })

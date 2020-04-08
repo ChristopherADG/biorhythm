@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Profile.css'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import UserContext from '../../context/user-context'
-import { USER_API_GET } from '../../util/constants'
+import { USER_API_GET, IMAGE_API_ROUTE, API_URL } from '../../util/constants'
 import ViewProfile from '../../components/Profile/ViewProfile';
 import EditProfile from '../../components/Profile/EditProfile';
 
@@ -15,7 +15,8 @@ class Profile extends Component {
         loggedIn: false,
         editedFirstname: '',
         editedLastname: '',
-        editedBirthdate: ''
+        editedBirthdate: '',
+        profilePicture: ''
     }
 
     componentDidMount() {
@@ -29,7 +30,8 @@ class Profile extends Component {
         this.setState({
             editedFirstname: this.context.state.user.name,
             editedLastname: this.context.state.user.lastname,
-            editedBirthdate: this.context.state.user.birthdate
+            editedBirthdate: this.context.state.user.birthdate,
+            profilePicture: (state.user.picture) ? state.user.picture : 'https://pbs.twimg.com/profile_images/1188507013233479681/WuNwaQ8R_400x400.jpg'
         })
 
     }
@@ -52,15 +54,18 @@ class Profile extends Component {
                         lname={this.state.editedLastname}
                         email={state.user.email}
                         bdate={this.state.editedBirthdate}
+                        profilePicture={this.state.profilePicture}
                         onEditClicked={this.onEditClicked}
                     />
                     <EditProfile
                         fname={state.user.name}
                         lname={state.user.lastname}
                         bdate={state.user.birthdate}
+                        profilePicture={this.state.profilePicture}
                         onChangeFirstname={this.changeFirstname}
                         onChangeLastname={this.changeLastname}
                         onChangeBirthdate={this.changeBirthdate}
+                        onChangePicture={this.changeFile}
                         updateUserHandler={this.updateUser}
                         onUpdateClicked={this.onUpdateClicked}
                     />
@@ -89,7 +94,28 @@ class Profile extends Component {
                     console.log(res.data);
                     this.onUpdateClicked();
                     this.updateContextUser();
+                    this.uploadImage();
                 })
+                .catch(err => console.log(err));
+        }
+    }
+
+    uploadImage() {
+        if (this.state.profilePicture !== this.context.state.user.picture) {
+            axios.post(IMAGE_API_ROUTE + `${this.context.state.user.id}/`, {
+                img_base_64: this.state.profilePicture
+            }).then(res => {
+                const { state, setUser } = this.context
+                let user = {
+                    name: this.state.editedFirstname,
+                    lastname: this.state.editedLastname,
+                    email: state.user.email,
+                    id: state.user.id,
+                    birthdate: this.state.editedBirthdate,
+                    picture: API_URL + res.data.image_url
+                }
+                setUser(user);
+            })
                 .catch(err => console.log(err));
         }
     }
@@ -101,9 +127,33 @@ class Profile extends Component {
             lastname: this.state.editedLastname,
             email: state.user.email,
             id: state.user.id,
-            birthdate: this.state.editedBirthdate
+            birthdate: this.state.editedBirthdate,
+            picture: state.user.picture
         }
         setUser(user);
+    }
+
+    getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    changeFile = (event) => {
+        const file = event.target.files[0];
+        this.getBase64(file)
+            .then(
+                data => {
+                    this.setState({
+                        profilePicture: data
+                    })
+                }
+
+            )
+            .catch(err => console.log(err));
     }
 
     changeFirstname = (event) => {
