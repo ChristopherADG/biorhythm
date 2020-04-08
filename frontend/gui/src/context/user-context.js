@@ -22,7 +22,7 @@ class UserProvider extends Component {
                             email: res.data.email,
                             id: id,
                             birthdate: res.data.birthdate,
-                            picture: API_URL + res.data.picture
+                            picture: res.data.picture
                         }
                     })
                 })
