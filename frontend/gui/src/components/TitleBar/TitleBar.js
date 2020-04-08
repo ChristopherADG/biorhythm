@@ -5,9 +5,7 @@ import './TitleBar.css'
 const TitleBar = (props) => {
     return (
         <div className="bar">
-            <div className="container">
-                <h4>{props.title}</h4>
-            </div>
+            <h4>{props.title}</h4>
         </div>
     )
 }

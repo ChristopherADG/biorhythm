@@ -60,26 +60,34 @@ class Dashboard extends Component {
         }
         return (
             <div>
-                <TitleBar title="Dashboard" />
-                <div className="container">
+
+                <div className="container-fluid">
+                    <TitleBar title="Dashboard" />
                     <div className="row">
-                        <div className="col-lg-4">
-                            <SingleBioBox
-                                phy={this.toPercent(this.state.myBiorhythm.phy)}
-                                emo={this.toPercent(this.state.myBiorhythm.emo)}
-                                inte={this.toPercent(this.state.myBiorhythm.int)}
-                                dateString={this.state.dateStr}
-                                changeDateHandler={this.changeDateHandler}
-                                submitNewDate={this.reloadSingleBioBox}
-                            />
+                        <div className="offset-lg-1 col-lg-3">
+                            <div className="row">
+                                <div className="col-lg-12">
+                                    <SingleBioBox
+                                        phy={this.toPercent(this.state.myBiorhythm.phy)}
+                                        emo={this.toPercent(this.state.myBiorhythm.emo)}
+                                        inte={this.toPercent(this.state.myBiorhythm.int)}
+                                        dateString={this.state.dateStr}
+                                        changeDateHandler={this.changeDateHandler}
+                                        submitNewDate={this.reloadSingleBioBox}
+                                    />
+                                </div>
+                                <div className="col-lg-12">
+                                    <EventsBox />
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-lg-8">
-                            <EventsBox />
+                        <div className="col-lg-7">
+                            <BigGraphBox data={this.state.bigChartData} dateString={this.state.myBiorhythm.target_date_str} />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col">
-                            <BigGraphBox data={this.state.bigChartData} dateString={this.state.myBiorhythm.target_date_str} />
+
                         </div>
                     </div>
                 </div>

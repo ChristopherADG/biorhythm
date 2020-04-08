@@ -45,8 +45,9 @@ class Profile extends Component {
         return (
 
             <div>
-                <TitleBar title="Profile" />
-                <div className="container">
+
+                <div className="container-fluid">
+                    <TitleBar title="Profile" />
                     <ViewProfile
                         fname={this.state.editedFirstname}
                         lname={this.state.editedLastname}
