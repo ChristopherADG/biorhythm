@@ -3,6 +3,7 @@ import SessionHandler from '../../util/sessions'
 import MenuOut from '../../components/MenuLoggedOut/MenuOut';
 import MenuIn from '../../components/MenuLoggedIn/MenuIn';
 import UserContext from '../../context/user-context'
+import './Menu.css'
 
 // EXAMPLE CLASS
 // must separate logged in views and MenuIN
@@ -53,3 +54,5 @@ class Menu extends Component {
 
 
 export default Menu;
+
+

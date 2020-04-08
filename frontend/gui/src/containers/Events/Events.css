@@ -1,0 +1,22 @@
+
+  .datepicker{
+      height: 100% !important;
+  }
+  
+  .isPublic{
+    height: 100% !important;
+    margin-left: .5rem;
+    margin-right: .5rem;
+  }
+
+  .event{
+    text-align: left !important;
+  }
+
+  .eventIcon{
+    float: right;
+  }
+
+  .lock{
+    color: red;
+  }

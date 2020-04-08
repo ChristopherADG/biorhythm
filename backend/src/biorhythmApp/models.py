@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class User(models.Model):
@@ -19,6 +20,8 @@ class Event(models.Model):
     isPublic = models.BooleanField()
     description = models.TextField()
     date = models.DateField()
+    scope = models.IntegerField(default=1,
+                                validators=[MaxValueValidator(3), MinValueValidator(1)])
 
     def __str__(self):
         return self.title
