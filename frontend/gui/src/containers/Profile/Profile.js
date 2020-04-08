@@ -15,7 +15,8 @@ class Profile extends Component {
         loggedIn: false,
         editedFirstname: '',
         editedLastname: '',
-        editedBirthdate: ''
+        editedBirthdate: '',
+        profilePicture: ''
     }
 
     componentDidMount() {
@@ -52,15 +53,18 @@ class Profile extends Component {
                         lname={this.state.editedLastname}
                         email={state.user.email}
                         bdate={this.state.editedBirthdate}
+                        profilePicture={this.state.profilePicture}
                         onEditClicked={this.onEditClicked}
                     />
                     <EditProfile
                         fname={state.user.name}
                         lname={state.user.lastname}
                         bdate={state.user.birthdate}
+                        profilePicture={this.state.profilePicture}
                         onChangeFirstname={this.changeFirstname}
                         onChangeLastname={this.changeLastname}
                         onChangeBirthdate={this.changeBirthdate}
+                        onChangePicture={this.changeFile}
                         updateUserHandler={this.updateUser}
                         onUpdateClicked={this.onUpdateClicked}
                     />
@@ -104,6 +108,29 @@ class Profile extends Component {
             birthdate: this.state.editedBirthdate
         }
         setUser(user);
+    }
+
+    getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
+
+    changeFile = (event) => {
+        const file = event.target.files[0];
+        this.getBase64(file)
+            .then(
+                data => {
+                    this.setState({
+                        profilePicture: data
+                    })
+                }
+
+            )
+            .catch(err => console.log(err));
     }
 
     changeFirstname = (event) => {
