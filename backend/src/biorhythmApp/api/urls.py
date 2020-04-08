@@ -7,11 +7,13 @@ from .views import (
     EventListView,
     EventDetailView,
     EventCreateView,
-    EventUpdateView
+    EventUpdateView,
+    EventParticipantCreateView
 )
 from .sessions import LoginView, LogoutView
 from .calc import BioView
 from .uploads import ImageUploadView
+from .events import EventParticipantListView, EventAvailableListView, EventOrganizedListView, EventJoinedListView
 
 urlpatterns = [
     path('users/', UserListView.as_view()),
@@ -26,4 +28,9 @@ urlpatterns = [
     path('events/<pk>/update/', EventUpdateView.as_view()),
     path('biocalc/<str:email>', BioView.as_view()),
     path('image/<int:pk>/', ImageUploadView.as_view()),
+    path('events/join/', EventParticipantCreateView.as_view()),
+    path('events/myevents/', EventParticipantListView.as_view()),
+    path('events/availableEventes/', EventAvailableListView.as_view()),
+    path('events/organized/', EventOrganizedListView.as_view()),
+    path('events/joined/', EventJoinedListView.as_view()),
 ]

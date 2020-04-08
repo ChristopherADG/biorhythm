@@ -8,8 +8,10 @@ export const CALC_BIO_API_ROUTE = API_URL + '/api/biocalc';
 export const USER_API_GET = API_URL + '/api/users/';
 export const IMAGE_API_ROUTE = API_URL + '/api/image/'
 export const CREATE_EVENT = API_URL + '/api/events/create/';
-export const GET_EVENTS = API_URL + '/api/events/';
-
+export const GET_EVENTS = API_URL + '/api/events/availableEventes/';
+export const GET_MY_EVENTS = API_URL + '/api/events/myevents/';
+export const GET_ORGANIZED_EVENTS = API_URL + '/api/events/organized/';
+export const GET_JOINED_EVENTS = API_URL + '/api/events/joined/';
 
 /* KEYWORDS */
 export const COOKIE_FLAG_KEY = 'bio'

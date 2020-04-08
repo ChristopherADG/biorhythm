@@ -5,7 +5,7 @@ const ViewProfile = (props) => {
     return (
         <div id="read-only-profile" className="slim-box">
             <div className="row inner-content-profile">
-                <div className="col-md-4">
+                <div className="col-md-4 inner-content-profile">
                     <img className="profileCircle" src={props.profilePicture} alt="avatar" />
                 </div>
                 <div className="col inner-content-profile">

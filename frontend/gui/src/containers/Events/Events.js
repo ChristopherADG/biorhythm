@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CREATE_EVENT, GET_EVENTS } from '../../util/constants'
+import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS } from '../../util/constants'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import UserContext from '../../context/user-context'
 import Event from '../../components/Events/event'
@@ -16,11 +16,27 @@ class Events extends Component {
         isPublic: false,
         scope: '',
         date: '',
-        events: []
+        events: [],
+        myEvents: [],
+        user: {}
+    }
+
+    constructor(props) {
+        super(props);
+        this.getMyEvents = this.getMyEvents.bind(this);
+        this.getOrganizedEvents = this.getOrganizedEvents.bind(this);
+        this.getJoinedEvents = this.getJoinedEvents.bind(this);
     }
 
     componentDidMount() {
-        this.getEvents();
+
+        const { state } = this.context
+        this.setState({
+            user: state.user
+        }, () => {
+            this.getEvents();
+            this.getMyEvents();
+        })
     }
 
     changeTitle = (event) => {
@@ -82,29 +98,66 @@ class Events extends Component {
                 scope: this.state.scope
             })
                 .then(res => {
-                    this.getEvents();
+                    this.getMyEvents();
                 })
                 .catch(err => console.log(err));
         }
     }
 
     processEvents(events) {
-        const { state } = this.context
         let finalEvents = [];
+        let key = 1;
         events.forEach(element => {
+            element.key = key;
             finalEvents.push(element)
+            key++;
         });
 
-        return finalEvents.reverse();
+        finalEvents.sort((a, b) => {
+            let temp1 = new Date(a.date).getTime();
+            let temp2 = new Date(b.date).getTime();
+            return temp1 - temp2;
+        })
+
+        return finalEvents;
     }
 
     getEvents() {
-        axios.get(GET_EVENTS)
+        axios.get(GET_EVENTS + '?pk=' + this.state.user.id)
             .then(res => {
                 this.setState({
                     events: this.processEvents(res.data)
                 })
-                console.log(res.data);
+            })
+            .catch(err => console.log(err));
+    }
+
+    getMyEvents() {
+        axios.get(GET_MY_EVENTS + '?pk=' + this.state.user.id)
+            .then(res => {
+                this.setState({
+                    myEvents: this.processEvents(res.data)
+                })
+            })
+            .catch(err => console.log(err));
+    }
+
+    getOrganizedEvents() {
+        axios.get(GET_ORGANIZED_EVENTS + '?pk=' + this.state.user.id)
+            .then(res => {
+                this.setState({
+                    myEvents: this.processEvents(res.data)
+                })
+            })
+            .catch(err => console.log(err));
+    }
+
+    getJoinedEvents() {
+        axios.get(GET_JOINED_EVENTS + '?pk=' + this.state.user.id)
+            .then(res => {
+                this.setState({
+                    myEvents: this.processEvents(res.data)
+                })
             })
             .catch(err => console.log(err));
     }
@@ -130,17 +183,26 @@ class Events extends Component {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <h3>My Events</h3><hr />
-                                    {
-                                        this.state.events.map((post) => (
-                                            <Event
+                                    <div className="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" className="btn btn-secondary" onClick={this.getMyEvents}>All</button>
+                                        <button type="button" className="btn btn-secondary" onClick={this.getOrganizedEvents}>Organized</button>
+                                        <button type="button" className="btn btn-secondary" onClick={this.getJoinedEvents}>Joined</button>
+                                    </div>
+                                    <br /><br />
+                                    {this.state.myEvents.length > 0 &&
+                                        this.state.myEvents.map((post) => (
+                                            <Event key={post.key}
                                                 title={post.title}
                                                 description={post.description}
                                                 date={post.date}
                                                 public={post.isPublic}
                                                 scope={post.scope}
-                                                join={post.creator != state.user.id}
+                                                owner={post.creator + '' === state.user.id + ''}
                                             />
                                         ))
+                                    }
+                                    {this.state.myEvents.length < 1 &&
+                                        <h6 className="text-center">No Events</h6>
                                     }
                                 </div>
                             </div>
@@ -149,17 +211,28 @@ class Events extends Component {
                             <div className="row">
                                 <div className="col-lg-12">
                                     <h3>Available Events</h3><hr />
-                                    {
+                                    <div className="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" className="btn btn-secondary">All</button>
+                                        <button type="button" className="btn btn-secondary">Physical</button>
+                                        <button type="button" className="btn btn-secondary">Emotional</button>
+                                        <button type="button" className="btn btn-secondary">Intellectual</button>
+                                    </div>
+                                    <br /><br />
+                                    {this.state.events.length > 0 &&
                                         this.state.events.map((post) => (
                                             <Event
+                                                key={post.key}
                                                 title={post.title}
                                                 description={post.description}
                                                 date={post.date}
                                                 public={post.isPublic}
                                                 scope={post.scope}
-                                                join={post.creator != state.user.id}
+                                                owner={post.creator === state.user.id}
                                             />
                                         ))
+                                    }
+                                    {this.state.events.length < 1 &&
+                                        <h6 className="text-center">No Events</h6>
                                     }
                                 </div>
                             </div>
@@ -167,7 +240,7 @@ class Events extends Component {
                     </div>
                 </div>
 
-                <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">

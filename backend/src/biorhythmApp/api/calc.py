@@ -22,7 +22,8 @@ class BioView(APIView):
         target_date = datetime.now()
 
         if request.GET.get('target_date'):
-            target_date = datetime.strptime(request.GET.get('target_date'), '%Y-%m-%d')
+            target_date = datetime.strptime(
+                request.GET.get('target_date'), '%Y-%m-%d')
 
         if request.GET.get('range'):
             scope = int(request.GET.get('range'))
@@ -64,9 +65,12 @@ class Biorhythm:
     def calculate(self, target_date=datetime.now(), limit=15):
         self.days_since = self.get_time_difference(target_date)
 
-        self.physical = round(math.sin((2 * math.pi * self.days_since) / 23), limit)
-        self.emotional = round(math.sin((2 * math.pi * self.days_since) / 28), limit)
-        self.intellectual = round(math.sin((2 * math.pi * self.days_since) / 33), limit)
+        self.physical = round(
+            math.sin((2 * math.pi * self.days_since) / 23), limit)
+        self.emotional = round(
+            math.sin((2 * math.pi * self.days_since) / 28), limit)
+        self.intellectual = round(
+            math.sin((2 * math.pi * self.days_since) / 33), limit)
         return self
 
     def to_string(self):
@@ -96,7 +100,8 @@ class ListBio:
 
         for i in range(self.scope):
             target_date = init_date + timedelta(days=i)
-            self.list.append(Biorhythm(self.birth_date).calculate(target_date=target_date, limit=limit))
+            self.list.append(Biorhythm(self.birth_date).calculate(
+                target_date=target_date, limit=limit))
 
         return self
 

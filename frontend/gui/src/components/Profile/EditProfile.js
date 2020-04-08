@@ -8,7 +8,7 @@ const EditProfile = (props) => {
     return (
         <div id="write-only-profile" className="slim-box">
             <div className="row inner-content-profile">
-                <div className="col-md-4">
+                <div className="col-md-4 inner-content-profile">
                     <div className="row">
                         <img id="editable-img" className="profileCircle" src={props.profilePicture} alt="avatar" onClick={getFile} />
                         <div className="middle-overlay"></div>

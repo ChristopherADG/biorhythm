@@ -38,7 +38,7 @@ class UserProvider extends Component {
             .then(res => {
                 if (res.data.success) {
                     let temp = res.data.user
-                    temp.picture = API_URL + temp.picture
+                    temp.picture = !temp.picture.includes("http") ? API_URL + temp.picture : temp.picture
                     console.log(temp)
                     this.setState({
                         user: temp
