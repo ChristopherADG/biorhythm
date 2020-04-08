@@ -5,7 +5,7 @@ from biorhythmApp.models import User, Event
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'password', 'firstname', 'lastname', 'birthdate')
+        fields = ('email', 'password', 'firstname', 'lastname', 'birthdate', 'picture')
 
 
 class EventSerializer(serializers.ModelSerializer):

@@ -6,7 +6,7 @@ const ViewProfile = (props) => {
         <div id="read-only-profile" className="slim-box">
             <div className="row inner-content-profile">
                 <div className="col-md-4">
-                    <div id="profileCircle"></div>
+                    <img className="profileCircle" src={props.profilePicture} alt="avatar" />
                 </div>
                 <div className="col inner-content-profile">
                     <div className="row">
