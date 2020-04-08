@@ -25,3 +25,11 @@ class Event(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class EventParticipant(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.event.title + "_" + self.user.email
