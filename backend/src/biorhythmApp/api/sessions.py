@@ -73,7 +73,8 @@ class LoginView(APIView):
                 'lastname': user_requested.lastname,
                 'email': user_requested.email,
                 'id': user_requested.id,
-                'birthdate': user_requested.birthdate
+                'birthdate': user_requested.birthdate,
+                'picture': user_requested.picture.url
             }
 
             res = Response(

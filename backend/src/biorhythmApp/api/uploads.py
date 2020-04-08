@@ -35,6 +35,8 @@ class ImageUploadView(APIView):
         except:
             return Response({'error': "Can't upload image"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+        return Response({'image_url': user_requested.picture.url}, status=status.HTTP_200_OK)
+
 
 def to_file(file_str, user_id):
     format, imgstr = file_str.split(';base64,')

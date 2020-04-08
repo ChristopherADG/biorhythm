@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Profile.css'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import UserContext from '../../context/user-context'
-import { USER_API_GET } from '../../util/constants'
+import { USER_API_GET, IMAGE_API_ROUTE, API_URL } from '../../util/constants'
 import ViewProfile from '../../components/Profile/ViewProfile';
 import EditProfile from '../../components/Profile/EditProfile';
 
@@ -30,7 +30,8 @@ class Profile extends Component {
         this.setState({
             editedFirstname: this.context.state.user.name,
             editedLastname: this.context.state.user.lastname,
-            editedBirthdate: this.context.state.user.birthdate
+            editedBirthdate: this.context.state.user.birthdate,
+            profilePicture: state.user.picture
         })
 
     }
@@ -93,7 +94,28 @@ class Profile extends Component {
                     console.log(res.data);
                     this.onUpdateClicked();
                     this.updateContextUser();
+                    this.uploadImage();
                 })
+                .catch(err => console.log(err));
+        }
+    }
+
+    uploadImage() {
+        if (this.state.profilePicture !== this.context.state.user.picture) {
+            axios.post(IMAGE_API_ROUTE + `${this.context.state.user.id}/`, {
+                img_base_64: this.state.profilePicture
+            }).then(res => {
+                const { state, setUser } = this.context
+                let user = {
+                    name: this.state.editedFirstname,
+                    lastname: this.state.editedLastname,
+                    email: state.user.email,
+                    id: state.user.id,
+                    birthdate: this.state.editedBirthdate,
+                    picture: API_URL + res.data.image_url
+                }
+                setUser(user);
+            })
                 .catch(err => console.log(err));
         }
     }
@@ -105,7 +127,8 @@ class Profile extends Component {
             lastname: this.state.editedLastname,
             email: state.user.email,
             id: state.user.id,
-            birthdate: this.state.editedBirthdate
+            birthdate: this.state.editedBirthdate,
+            picture: state.user.picture
         }
         setUser(user);
     }
