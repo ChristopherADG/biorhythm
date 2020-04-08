@@ -24,7 +24,7 @@ class MenuIn extends Component {
                                 <Link to='/events' className="nav-link">Events</Link>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a className="nav-link dropdown-toggle" href="#!" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Account
                             </a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

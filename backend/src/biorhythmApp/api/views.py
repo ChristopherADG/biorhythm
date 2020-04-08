@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView
 from rest_framework import permissions
-from biorhythmApp.models import User, Event
-from .serializers import UserSerializer, EventSerializer, SimpleUserSerializer
+from biorhythmApp.models import User, Event, EventParticipant
+from .serializers import UserSerializer, EventSerializer, SimpleUserSerializer, EventParticipantSerializer
 
 
 # USER
@@ -51,23 +51,7 @@ class EventUpdateView(UpdateAPIView):
 
 
 # EVENT PARTICIPANT
-class EventParticipantListView(ListAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-
-
-class EventDetailView(RetrieveAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-
-
-class EventCreateView(CreateAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-    permission_classes = (permissions.AllowAny)
-
-
-class EventUpdateView(UpdateAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
+class EventParticipantCreateView(CreateAPIView):
+    queryset = EventParticipant.objects.all()
+    serializer_class = EventParticipantSerializer
     permission_classes = (permissions.AllowAny)

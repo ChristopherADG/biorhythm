@@ -1,11 +1,12 @@
 from rest_framework import serializers
-from biorhythmApp.models import User, Event
+from biorhythmApp.models import User, Event, EventParticipant
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'password', 'firstname', 'lastname', 'birthdate', 'picture')
+        fields = ('email', 'password', 'firstname',
+                  'lastname', 'birthdate', 'picture')
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -13,6 +14,12 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = ('creator', 'title', 'isPublic',
                   'description', 'date', 'scope')
+
+
+class EventParticipantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventParticipant
+        fields = ('event', 'user')
 
 
 class SimpleUserSerializer(serializers.ModelSerializer):
