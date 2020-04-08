@@ -68,13 +68,14 @@ class LoginView(APIView):
                 'lastname': user_requested.lastname,
                 'email': user_requested.email
             }
+            
             user = {
                 'name': user_requested.firstname,
                 'lastname': user_requested.lastname,
                 'email': user_requested.email,
                 'id': user_requested.id,
                 'birthdate': user_requested.birthdate,
-                'picture': user_requested.picture.url
+                'picture': user_requested.picture.url if user_requested.picture else None
             }
 
             res = Response(

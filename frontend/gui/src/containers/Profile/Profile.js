@@ -31,7 +31,7 @@ class Profile extends Component {
             editedFirstname: this.context.state.user.name,
             editedLastname: this.context.state.user.lastname,
             editedBirthdate: this.context.state.user.birthdate,
-            profilePicture: state.user.picture
+            profilePicture: (state.user.picture) ? state.user.picture : 'https://pbs.twimg.com/profile_images/1188507013233479681/WuNwaQ8R_400x400.jpg'
         })
 
     }
