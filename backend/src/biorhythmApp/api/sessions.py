@@ -68,14 +68,14 @@ class LoginView(APIView):
                 'lastname': user_requested.lastname,
                 'email': user_requested.email
             }
-            
+
             user = {
                 'name': user_requested.firstname,
                 'lastname': user_requested.lastname,
                 'email': user_requested.email,
                 'id': user_requested.id,
                 'birthdate': user_requested.birthdate,
-                'picture': user_requested.picture.url if user_requested.picture else None
+                'picture': user_requested.picture.url if user_requested.picture else 'https://pbs.twimg.com/profile_images/1188507013233479681/WuNwaQ8R_400x400.jpg'
             }
 
             res = Response(
