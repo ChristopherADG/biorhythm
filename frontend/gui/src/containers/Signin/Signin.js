@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import LoginForm from '../../components/Signin/LoginForm';
 import SessionHandler from '../../util/sessions'
-
 import UserContext from '../../context/user-context'
 
 class Signin extends Component {
@@ -22,15 +21,12 @@ class Signin extends Component {
             this.props.history.push('/dashboard')
         }
         return (
-
-            <div>
-                <LoginForm
-                    emailHandler={this.changeEmail}
-                    pwordHandler={this.changePassword}
-                    submitHandler={this.loginUser}
-                    message={this.state.message}
-                />
-            </div>
+            <LoginForm
+                emailHandler={this.changeEmail}
+                pwordHandler={this.changePassword}
+                submitHandler={this.loginUser}
+                message={this.state.message}
+            />
         );
     }
 

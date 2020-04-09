@@ -65,7 +65,6 @@ class Dashboard extends Component {
         }
         return (
             <div>
-
                 <div className="container-fluid">
                     <TitleBar title="Dashboard" />
                     <div className="row">

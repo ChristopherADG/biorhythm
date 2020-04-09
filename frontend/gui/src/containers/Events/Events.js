@@ -281,7 +281,6 @@ class Events extends Component {
         return (
             <div>
                 <div className="container-fluid">
-                    <br />
                     <TitleBar title="Events" />
                     <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Create Event

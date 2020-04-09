@@ -17,6 +17,13 @@
     background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
     background-size: cover;
   }
+
+  .card-signin.card-login .card-img-left {
+    width: 45%;
+    /* Link to your background image using in the property below! */
+    background: scroll center url('https://i0.wp.com/onlyvectorbackgrounds.com/wp-content/uploads/2018/10/Abstract-Geometric-Background-Orange.jpg?fit=1191%2C842');
+    background-size: cover;
+  }
   
   .card-signin .card-body {
     padding: 2rem;
