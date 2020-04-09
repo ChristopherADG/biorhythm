@@ -34,6 +34,7 @@ class Events extends Component {
         this.getOrganizedEvents = this.getOrganizedEvents.bind(this);
         this.getJoinedEvents = this.getJoinedEvents.bind(this);
         this.update = this.update.bind(this)
+        this.delete = this.delete.bind(this)
     }
 
     componentDidMount() {
@@ -167,6 +168,12 @@ class Events extends Component {
                 return list[i];
             }
         }
+    }
+
+    delete(eventID) {
+        axios.delete(EVENT_API + `${eventID}` + '/delete/')
+            .then(() => this.getMyEvents())
+            .catch(err => console.log(err));
     }
 
     processEvents(events) {
@@ -326,6 +333,7 @@ class Events extends Component {
                                                 editTitleHandler={this.changeTitleEdit}
                                                 editDescHandler={this.changeDescEdit}
                                                 updateHandler={this.update}
+                                                deleteHandler={this.delete}
                                             />
                                         ))
                                     }
