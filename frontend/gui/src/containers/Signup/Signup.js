@@ -35,7 +35,7 @@ class Signup extends Component {
 
     renderRedirect = () => {
         if (this.state.redirect) {
-            return <Redirect to='/signin' />
+            return <Redirect to='/login' />
         }
     }
 
@@ -104,8 +104,6 @@ class Signup extends Component {
                 birthdate: this.state.birthdate
             })
                 .then(res => {
-                    console.log(res);
-                    console.log(res.data);
                     this.setState({
                         email: '',
                         firstname: '',
@@ -118,25 +116,6 @@ class Signup extends Component {
                 })
                 .catch(err => console.log(err));
         }
-    }
-
-    fakeUser = (event) => {
-        event.preventDefault();
-        axios.post(CREATE_USER_API_ROUTE, {
-            email: "nuevo2@email.com",
-            firstname: "Nuevo",
-            lastname: "Lastnameee",
-            password: "1234",
-            birthdate: "2020-01-01"
-        })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                this.setState({
-                    redirect: true
-                })
-            })
-            .catch(err => console.log(err));
     }
 
 }

@@ -146,9 +146,9 @@ class Events extends Component {
 
     getScopedEvents(scope) {
         let title = '';
-        if (scope == 1) {
+        if (scope === 1) {
             title = 'Physical'
-        } else if (scope == 2) {
+        } else if (scope === 2) {
             title = 'Emotional'
         } else {
             title = 'Intellectual'
@@ -241,7 +241,6 @@ class Events extends Component {
         return (
             <div>
                 <div className="container-fluid">
-                    <br />
                     <TitleBar title="Events" />
                     <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Create Event
