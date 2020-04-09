@@ -17,6 +17,7 @@ class Events extends Component {
         scope: '1',
         date: '',
         myEventsState: 'all',
+        availableState: 'all',
         events: [],
         myEvents: [],
         user: {}
@@ -129,13 +130,23 @@ class Events extends Component {
         axios.get(GET_EVENTS + '?pk=' + this.state.user.id)
             .then(res => {
                 this.setState({
-                    events: this.processEvents(res.data)
+                    events: this.processEvents(res.data),
+                    availableState: 'All'
                 })
             })
             .catch(err => console.log(err));
     }
 
     getScopedEvents(scope) {
+        let title = '';
+        if (scope == 1) {
+            title = 'Physical'
+        } else if (scope == 2) {
+            title = 'Emotional'
+        } else {
+            title = 'Intellectual'
+        }
+
         axios.get(GET_EVENTS, {
             params: {
                 pk: this.state.user.id,
@@ -144,7 +155,8 @@ class Events extends Component {
         })
             .then(res => {
                 this.setState({
-                    events: this.processEvents(res.data)
+                    events: this.processEvents(res.data),
+                    availableState: title
                 })
             })
             .catch(err => console.log(err));
@@ -232,6 +244,7 @@ class Events extends Component {
                                                 public={myEvent.isPublic}
                                                 scope={myEvent.scope}
                                                 owner={myEvent.creator + '' === state.user.id + ''}
+                                                joinable={false}
                                                 join={this.join}
                                                 user={this.state.user.id}
                                                 id={myEvent.id}
@@ -247,7 +260,7 @@ class Events extends Component {
                         <div className="col-lg-5">
                             <div className="row">
                                 <div className="col-lg-12">
-                                    <h3>Available Events</h3><hr />
+                                    <h3>Available Events - <span>{this.state.availableState}</span></h3><hr />
                                     <div className="btn-group" role="group" aria-label="Basic example">
                                         <button onClick={this.getEvents} type="button" className="btn btn-secondary">All</button>
                                         <button onClick={() => this.getScopedEvents(1)} type="button" className="btn btn-secondary">Physical</button>
@@ -266,6 +279,7 @@ class Events extends Component {
                                                 scope={post.scope}
                                                 owner={post.creator === state.user.id}
                                                 join={this.join}
+                                                joinable={true}
                                                 user={this.state.user.id}
                                                 id={post.id}
                                             />

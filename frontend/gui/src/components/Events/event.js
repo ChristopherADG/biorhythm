@@ -29,7 +29,7 @@ const Event = (props) => {
                             {props.scope === 2 &&
                                 <p className="col-6 bio-label"> <span className="circle color-green"></span> Emotional</p>
                             }
-                            {!props.owner &&
+                            {props.joinable &&
                                 <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target={'#joinModal' + props.id}>Join</button>
                             }
                         </div>
