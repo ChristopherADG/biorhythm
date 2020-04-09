@@ -26,7 +26,7 @@ urlpatterns = [
     path('events/<pk>', EventDetailView.as_view()),
     path('events/create/', EventCreateView.as_view()),
     path('events/<pk>/update/', EventUpdateView.as_view()),
-    path('biocalc/<str:email>', BioView.as_view()),
+    path('biocalc/<int:pk>', BioView.as_view()),
     path('image/<int:pk>/', ImageUploadView.as_view()),
     path('events/join/', EventParticipantCreateView.as_view()),
     path('events/myevents/', EventParticipantListView.as_view()),
