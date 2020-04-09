@@ -11,7 +11,7 @@ const Event = (props) => {
                         < i className="material-icons eventIcon">house</i>
                     }
                     {props.owner &&
-                        <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#editModal">
+                        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={'#editModal' + props.id}>
                             < i className="material-icons eventIcon">edit</i>
                         </button>
                     }
@@ -63,7 +63,7 @@ const Event = (props) => {
                 </div>
             </div>
 
-            <div className="modal fade" id="editModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id={'editModal' + props.id} tabIndex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
