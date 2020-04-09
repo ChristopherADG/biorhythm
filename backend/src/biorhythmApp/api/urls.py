@@ -8,7 +8,8 @@ from .views import (
     EventDetailView,
     EventCreateView,
     EventUpdateView,
-    EventParticipantCreateView
+    EventParticipantCreateView,
+    EventDeleteView
 )
 from .sessions import LoginView, LogoutView
 from .calc import BioView
@@ -33,4 +34,5 @@ urlpatterns = [
     path('events/availableEventes/', EventAvailableListView.as_view()),
     path('events/organized/', EventOrganizedListView.as_view()),
     path('events/joined/', EventJoinedListView.as_view()),
+    path('events/<pk>/delete/', EventDeleteView.as_view())
 ]
