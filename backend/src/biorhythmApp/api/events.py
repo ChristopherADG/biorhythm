@@ -37,6 +37,7 @@ class EventAvailableListView(generics.ListAPIView):
 
     def get_queryset(self):
         pk = self.request.query_params.get('pk', None)
+        scope = self.request.query_params.get('scope', None)
         eventList = EventParticipant.objects.filter(user=pk)
 
         myEvents = []
@@ -45,7 +46,7 @@ class EventAvailableListView(generics.ListAPIView):
             myEvents.append(eventParticipant.event.id)
 
         finalEvents = []
-        allEvents = Event.objects.filter(~Q(creator=pk))
+        allEvents = Event.objects.filter(~Q(creator=pk)) if scope is None else Event.objects.filter(~Q(creator=pk), scope=scope)
         for event in allEvents:
             if not event.id in myEvents and event.isPublic:
                 finalEvents.append(event)
@@ -79,3 +80,4 @@ class EventJoinedListView(generics.ListAPIView):
             events.append(Event.objects.get(id=eventParticipant.event.id))
 
         return events
+
