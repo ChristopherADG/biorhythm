@@ -88,6 +88,16 @@ class Biorhythm:
             "target_date_str": self.target_date.strftime('%Y/%m/%d')
         }
 
+    def get_by_scope(self, scope):
+        if scope is 1:
+            return self.physical
+        elif scope is 2:
+            return self.emotional
+        elif scope is 3:
+            return self.intellectual
+        else:
+            return 0
+
 
 class ListBio:
 

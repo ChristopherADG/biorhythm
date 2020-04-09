@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS, JOIN_EVENT } from '../../util/constants'
+import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS, JOIN_EVENT, CALC_BIO_API_ROUTE } from '../../util/constants'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import UserContext from '../../context/user-context'
 import Event from '../../components/Events/event'
@@ -122,7 +122,6 @@ class Events extends Component {
             let temp2 = new Date(b.date).getTime();
             return temp1 - temp2;
         })
-        console.log(finalEvents)
         return finalEvents;
     }
 
@@ -178,7 +177,7 @@ class Events extends Component {
             .then(res => {
                 this.setState({
                     myEvents: this.processEvents(res.data),
-                    myEventsState: 'Organized'
+                    myEventsState: 'Hosted'
                 })
             })
             .catch(err => console.log(err));
@@ -231,7 +230,7 @@ class Events extends Component {
                                     <h3>My Events - <span>{this.state.myEventsState}</span></h3><hr />
                                     <div className="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" className="btn btn-secondary" onClick={this.getMyEvents}>All</button>
-                                        <button type="button" className="btn btn-secondary" onClick={this.getOrganizedEvents}>Organized</button>
+                                        <button type="button" className="btn btn-secondary" onClick={this.getOrganizedEvents}>Hosted</button>
                                         <button type="button" className="btn btn-secondary" onClick={this.getJoinedEvents}>Joined</button>
                                     </div>
                                     <br /><br />
@@ -248,6 +247,7 @@ class Events extends Component {
                                                 join={this.join}
                                                 user={this.state.user.id}
                                                 id={myEvent.id}
+                                                bio={myEvent.myScopeBio}
                                             />
                                         ))
                                     }
@@ -282,6 +282,7 @@ class Events extends Component {
                                                 joinable={true}
                                                 user={this.state.user.id}
                                                 id={post.id}
+                                                bio={post.myScopeBio}
                                             />
                                         ))
                                     }
