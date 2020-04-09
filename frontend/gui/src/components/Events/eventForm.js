@@ -44,6 +44,39 @@ const CreateEvent = (props) => {
                     </select>
                 </div>
             </div>
+            <div className="row">
+                <div className="col row">
+                    <span className="circle color-purple"></span>
+                    <p className="col-6 bio-label">Physical</p>
+                </div>
+                <p className="col">
+                    <span className="bio-label">
+                        {(props.bio.phy !== undefined) ? props.bio.phy * 100 : 0}%
+                    </span>
+                </p>
+            </div>
+            <div className="row">
+                <div className="col row">
+                    <span className="circle color-green"></span>
+                    <p className="col-6 bio-label">Emotional</p>
+                </div>
+                <p className="col">
+                    <span className="bio-label">
+                        {(props.bio.emo !== undefined) ? props.bio.emo * 100 : 0}%
+                    </span>
+                </p>
+            </div>
+            <div className="row">
+                <div className="col row">
+                    <span className="circle color-yellow"></span>
+                    <p className="col-6 bio-label">Intellectual</p>
+                </div>
+                <p className="col">
+                    <span className="bio-label">
+                        {(props.bio.int !== undefined) ? props.bio.int * 100 : 0}%
+                    </span>
+                </p>
+            </div>
         </div>
     )
 }

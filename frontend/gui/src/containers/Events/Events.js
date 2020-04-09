@@ -20,7 +20,8 @@ class Events extends Component {
         availableState: 'all',
         events: [],
         myEvents: [],
-        user: {}
+        user: {},
+        myBio: {}
     }
 
     constructor(props) {
@@ -81,6 +82,13 @@ class Events extends Component {
         this.setState({
             date: date
         })
+        if (date === '') {
+            this.setState({
+                myBio: {}
+            })
+        } else {
+            this.calcBio(date)
+        }
     }
 
     create = (event) => {
@@ -207,6 +215,21 @@ class Events extends Component {
 
     }
 
+    calcBio(targetDate) {
+        axios.get(CALC_BIO_API_ROUTE + `/${this.state.user.id}`, {
+            params: {
+                target_date: targetDate,
+                limit: 2
+            }
+        })
+            .then(res => {
+                this.setState({
+                    myBio: res.data
+                })
+            })
+            .catch(err => console.log(err));
+    }
+
     render() {
 
         const { state } = this.context
@@ -312,6 +335,7 @@ class Events extends Component {
                                     scopeHandler={this.changeScope}
                                     dateHandler={this.changeDate}
                                     createHandler={this.create}
+                                    bio={this.state.myBio}
                                 />
                             </div>
                             <div className="modal-footer">
