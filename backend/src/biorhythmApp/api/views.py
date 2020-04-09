@@ -54,4 +54,4 @@ class EventUpdateView(UpdateAPIView):
 class EventParticipantCreateView(CreateAPIView):
     queryset = EventParticipant.objects.all()
     serializer_class = EventParticipantSerializer
-    permission_classes = (permissions.AllowAny)
+    permission_classes = (permissions.AllowAny,)

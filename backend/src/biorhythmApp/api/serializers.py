@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('creator', 'title', 'isPublic',
+        fields = ('id', 'creator', 'title', 'isPublic',
                   'description', 'date', 'scope')
 
 

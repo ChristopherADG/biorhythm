@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS } from '../../util/constants'
+import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS, JOIN_EVENT } from '../../util/constants'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import UserContext from '../../context/user-context'
 import Event from '../../components/Events/event'
@@ -14,8 +14,10 @@ class Events extends Component {
         title: '',
         description: '',
         isPublic: false,
-        scope: '',
+        scope: '1',
         date: '',
+        myEventsState: 'all',
+        availableState: 'all',
         events: [],
         myEvents: [],
         user: {}
@@ -120,7 +122,7 @@ class Events extends Component {
             let temp2 = new Date(b.date).getTime();
             return temp1 - temp2;
         })
-
+        console.log(finalEvents)
         return finalEvents;
     }
 
@@ -128,13 +130,23 @@ class Events extends Component {
         axios.get(GET_EVENTS + '?pk=' + this.state.user.id)
             .then(res => {
                 this.setState({
-                    events: this.processEvents(res.data)
+                    events: this.processEvents(res.data),
+                    availableState: 'All'
                 })
             })
             .catch(err => console.log(err));
     }
 
     getScopedEvents(scope) {
+        let title = '';
+        if (scope == 1) {
+            title = 'Physical'
+        } else if (scope == 2) {
+            title = 'Emotional'
+        } else {
+            title = 'Intellectual'
+        }
+
         axios.get(GET_EVENTS, {
             params: {
                 pk: this.state.user.id,
@@ -143,7 +155,8 @@ class Events extends Component {
         })
             .then(res => {
                 this.setState({
-                    events: this.processEvents(res.data)
+                    events: this.processEvents(res.data),
+                    availableState: title
                 })
             })
             .catch(err => console.log(err));
@@ -153,7 +166,8 @@ class Events extends Component {
         axios.get(GET_MY_EVENTS + '?pk=' + this.state.user.id)
             .then(res => {
                 this.setState({
-                    myEvents: this.processEvents(res.data)
+                    myEvents: this.processEvents(res.data),
+                    myEventsState: 'All'
                 })
             })
             .catch(err => console.log(err));
@@ -163,7 +177,8 @@ class Events extends Component {
         axios.get(GET_ORGANIZED_EVENTS + '?pk=' + this.state.user.id)
             .then(res => {
                 this.setState({
-                    myEvents: this.processEvents(res.data)
+                    myEvents: this.processEvents(res.data),
+                    myEventsState: 'Organized'
                 })
             })
             .catch(err => console.log(err));
@@ -173,10 +188,24 @@ class Events extends Component {
         axios.get(GET_JOINED_EVENTS + '?pk=' + this.state.user.id)
             .then(res => {
                 this.setState({
-                    myEvents: this.processEvents(res.data)
+                    myEvents: this.processEvents(res.data),
+                    myEventsState: 'Joined'
                 })
             })
             .catch(err => console.log(err));
+    }
+
+    join = (event, user) => {
+        axios.post(JOIN_EVENT, {
+            event: event,
+            user: user
+        })
+            .then(res => {
+                this.getJoinedEvents();
+                this.getEvents();
+            })
+            .catch(err => console.log(err));
+
     }
 
     render() {
@@ -194,12 +223,12 @@ class Events extends Component {
                     <TitleBar title="Events" />
                     <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Create Event
-</button>
+                    </button>
                     <div className="row">
                         <div className="offset-lg-1 col-lg-5">
                             <div className="row">
                                 <div className="col-lg-12">
-                                    <h3>My Events</h3><hr />
+                                    <h3>My Events - <span>{this.state.myEventsState}</span></h3><hr />
                                     <div className="btn-group" role="group" aria-label="Basic example">
                                         <button type="button" className="btn btn-secondary" onClick={this.getMyEvents}>All</button>
                                         <button type="button" className="btn btn-secondary" onClick={this.getOrganizedEvents}>Organized</button>
@@ -207,14 +236,18 @@ class Events extends Component {
                                     </div>
                                     <br /><br />
                                     {this.state.myEvents.length > 0 &&
-                                        this.state.myEvents.map((post) => (
-                                            <Event key={post.key}
-                                                title={post.title}
-                                                description={post.description}
-                                                date={post.date}
-                                                public={post.isPublic}
-                                                scope={post.scope}
-                                                owner={post.creator + '' === state.user.id + ''}
+                                        this.state.myEvents.map((myEvent) => (
+                                            <Event key={myEvent.key}
+                                                title={myEvent.title}
+                                                description={myEvent.description}
+                                                date={myEvent.date}
+                                                public={myEvent.isPublic}
+                                                scope={myEvent.scope}
+                                                owner={myEvent.creator + '' === state.user.id + ''}
+                                                joinable={false}
+                                                join={this.join}
+                                                user={this.state.user.id}
+                                                id={myEvent.id}
                                             />
                                         ))
                                     }
@@ -227,7 +260,7 @@ class Events extends Component {
                         <div className="col-lg-5">
                             <div className="row">
                                 <div className="col-lg-12">
-                                    <h3>Available Events</h3><hr />
+                                    <h3>Available Events - <span>{this.state.availableState}</span></h3><hr />
                                     <div className="btn-group" role="group" aria-label="Basic example">
                                         <button onClick={this.getEvents} type="button" className="btn btn-secondary">All</button>
                                         <button onClick={() => this.getScopedEvents(1)} type="button" className="btn btn-secondary">Physical</button>
@@ -238,13 +271,17 @@ class Events extends Component {
                                     {this.state.events.length > 0 &&
                                         this.state.events.map((post) => (
                                             <Event
-                                                key={post.key}
+                                                key={post.id}
                                                 title={post.title}
                                                 description={post.description}
                                                 date={post.date}
                                                 public={post.isPublic}
                                                 scope={post.scope}
                                                 owner={post.creator === state.user.id}
+                                                join={this.join}
+                                                joinable={true}
+                                                user={this.state.user.id}
+                                                id={post.id}
                                             />
                                         ))
                                     }
