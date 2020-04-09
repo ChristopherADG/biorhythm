@@ -11,12 +11,15 @@ const EventsBox = (props) => {
                         <h5>Next Events</h5>
                     </div>
                     <div className="row">
-                        <p className="subtitle">5 days from now</p>
+                        <p className="subtitle"></p>
                     </div>
                     {props.myEvents.length > 0 &&
                         props.myEvents.map((myEvent) => (
-                            <EventElement name={myEvent.title} date={myEvent.date} scope={myEvent.scope} />
+                            <EventElement key={myEvent.id} name={myEvent.title} date={myEvent.date} scope={myEvent.scope} />
                         ))
+                    }
+                    {props.myEvents.length < 1 &&
+                        <h6 className="text-center">No Events</h6>
                     }
                 </div>
             </div>
