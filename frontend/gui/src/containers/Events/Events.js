@@ -23,6 +23,8 @@ class Events extends Component {
 
     constructor(props) {
         super(props);
+        this.getEvents = this.getEvents.bind(this)
+        this.getScopedEvents = this.getScopedEvents.bind(this)
         this.getMyEvents = this.getMyEvents.bind(this);
         this.getOrganizedEvents = this.getOrganizedEvents.bind(this);
         this.getJoinedEvents = this.getJoinedEvents.bind(this);
@@ -132,6 +134,21 @@ class Events extends Component {
             .catch(err => console.log(err));
     }
 
+    getScopedEvents(scope) {
+        axios.get(GET_EVENTS, {
+            params: {
+                pk: this.state.user.id,
+                scope: scope
+            }
+        })
+            .then(res => {
+                this.setState({
+                    events: this.processEvents(res.data)
+                })
+            })
+            .catch(err => console.log(err));
+    }
+
     getMyEvents() {
         axios.get(GET_MY_EVENTS + '?pk=' + this.state.user.id)
             .then(res => {
@@ -212,10 +229,10 @@ class Events extends Component {
                                 <div className="col-lg-12">
                                     <h3>Available Events</h3><hr />
                                     <div className="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" className="btn btn-secondary">All</button>
-                                        <button type="button" className="btn btn-secondary">Physical</button>
-                                        <button type="button" className="btn btn-secondary">Emotional</button>
-                                        <button type="button" className="btn btn-secondary">Intellectual</button>
+                                        <button onClick={this.getEvents} type="button" className="btn btn-secondary">All</button>
+                                        <button onClick={() => this.getScopedEvents(1)} type="button" className="btn btn-secondary">Physical</button>
+                                        <button onClick={() => this.getScopedEvents(2)} type="button" className="btn btn-secondary">Emotional</button>
+                                        <button onClick={() => this.getScopedEvents(3)} type="button" className="btn btn-secondary">Intellectual</button>
                                     </div>
                                     <br /><br />
                                     {this.state.events.length > 0 &&
