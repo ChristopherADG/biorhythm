@@ -136,23 +136,36 @@ class Events extends Component {
     }
 
     update(eventID) {
+        let tempTitle = this.state.editTitle;
+        let tempDesc = this.state.editDescription
 
-        if (this.state.editTitle === '' || this.state.editDescription === '') {
-            alert('No field should be empty');
-            return;
-        } else {
-            axios.put(EVENT_API + `${eventID}` + '/update/', {
-                title: this.state.editTitle,
-                description: this.state.editDescription
-            })
-                .then(res => {
-                    this.getMyEvents();
-                    this.setState({
-                        editTitle: '',
-                        editDescription: ''
-                    })
+        if (tempTitle === '') {
+            tempTitle = this.searchById(eventID, this.state.myEvents).title
+        }
+
+        if (tempDesc === '') {
+            tempDesc = this.searchById(eventID, this.state.myEvents).description
+        }
+
+        axios.put(EVENT_API + `${eventID}` + '/update/', {
+            title: tempTitle,
+            description: tempDesc
+        })
+            .then(res => {
+                this.getMyEvents();
+                this.setState({
+                    editTitle: '',
+                    editDescription: ''
                 })
-                .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+    }
+
+    searchById(id, list) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].id === id) {
+                return list[i];
+            }
         }
     }
 
