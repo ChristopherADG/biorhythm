@@ -172,7 +172,7 @@ class Events extends Component {
 
     delete(eventID) {
         axios.delete(EVENT_API + `${eventID}` + '/delete/')
-            .then(() => this.getMyEvents())
+            .then(() => { this.getMyEvents() })
             .catch(err => console.log(err));
     }
 
