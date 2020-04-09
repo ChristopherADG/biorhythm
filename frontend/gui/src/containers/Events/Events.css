@@ -20,3 +20,12 @@
   .lock{
     color: red;
   }
+
+  .clickable {
+    cursor: pointer;
+  }
+
+  .clickable:hover {
+    border-radius: 25%;
+    border: 1px solid lightblue;
+  }

@@ -26,3 +26,9 @@ class SimpleUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('firstname', 'lastname', 'birthdate')
+
+
+class SimpleEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ('title', 'description')
