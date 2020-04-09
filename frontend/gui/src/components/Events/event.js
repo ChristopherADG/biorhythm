@@ -46,7 +46,7 @@ const Event = (props) => {
                         </div>
                         <div className="col-lg-6">
                             {props.join &&
-                                <p className="card-text"><i className="material-icons lock">favorite</i>Forecast: {props.bio * 100}%</p>
+                                <p className="card-text"><i className="material-icons lock">favorite</i>Forecast: {parseInt(props.bio * 100)}%</p>
                             }
                         </div>
                     </div>

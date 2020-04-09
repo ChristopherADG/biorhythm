@@ -278,8 +278,7 @@ class Events extends Component {
     calcBio(targetDate) {
         axios.get(CALC_BIO_API_ROUTE + `/${this.state.user.id}`, {
             params: {
-                target_date: targetDate,
-                limit: 2
+                target_date: targetDate
             }
         })
             .then(res => {
