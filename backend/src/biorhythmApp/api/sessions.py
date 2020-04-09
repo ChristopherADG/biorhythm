@@ -32,9 +32,9 @@ def get_logged_user(request):
     return None
 
 
-def get_user_by_email(email):
+def get_user_by_pk(pk):
     try:
-        user_requested = User.objects.get(email__exact=email)
+        user_requested = User.objects.get(id=pk)
     except ObjectDoesNotExist:
         return None
     return user_requested

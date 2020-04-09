@@ -28,7 +28,11 @@ class Dashboard extends Component {
             return
         }
 
-        axios.get(CALC_BIO_API_ROUTE + `/${state.user.email}`)
+        axios.get(CALC_BIO_API_ROUTE + `/${state.user.id}`, {
+            params: {
+                target_date: this.getTodayFormated()
+            }
+        })
             .then(res => {
                 this.setState({
                     myBiorhythm: res.data
@@ -36,8 +40,9 @@ class Dashboard extends Component {
             })
             .catch(err => console.log(err));
 
-        axios.get(CALC_BIO_API_ROUTE + `/${state.user.email}`, {
+        axios.get(CALC_BIO_API_ROUTE + `/${state.user.id}`, {
             params: {
+                target_date: this.getTodayFormated(),
                 range: 15,
                 limit: 5
             }
@@ -152,11 +157,19 @@ class Dashboard extends Component {
         })
     }
 
+    getTodayFormated() {
+        let date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth() + 1;
+        var y = date.getFullYear();
+        return '' + y + '-' + (m <= 9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+    }
+
     reloadSingleBioBox = (event) => {
         event.preventDefault();
         const { state } = this.context
         if (this.state.tempDate !== '') {
-            axios.get(CALC_BIO_API_ROUTE + `/${state.user.email}`, {
+            axios.get(CALC_BIO_API_ROUTE + `/${state.user.id}`, {
                 params: {
                     target_date: this.state.tempDate
                 }
