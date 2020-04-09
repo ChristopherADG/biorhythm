@@ -13,6 +13,7 @@ export const GET_MY_EVENTS = API_URL + '/api/events/myevents/';
 export const GET_ORGANIZED_EVENTS = API_URL + '/api/events/organized/';
 export const GET_JOINED_EVENTS = API_URL + '/api/events/joined/';
 export const JOIN_EVENT = API_URL + '/api/events/join/';
+export const EVENT_API = API_URL + '/api/events/';
 
 
 /* KEYWORDS */

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS, JOIN_EVENT, CALC_BIO_API_ROUTE } from '../../util/constants'
+import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS, JOIN_EVENT, CALC_BIO_API_ROUTE, EVENT_API } from '../../util/constants'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import UserContext from '../../context/user-context'
 import Event from '../../components/Events/event'
@@ -21,7 +21,9 @@ class Events extends Component {
         events: [],
         myEvents: [],
         user: {},
-        myBio: {}
+        myBio: {},
+        editTitle: '',
+        editDescription: ''
     }
 
     constructor(props) {
@@ -31,6 +33,7 @@ class Events extends Component {
         this.getMyEvents = this.getMyEvents.bind(this);
         this.getOrganizedEvents = this.getOrganizedEvents.bind(this);
         this.getJoinedEvents = this.getJoinedEvents.bind(this);
+        this.update = this.update.bind(this)
     }
 
     componentDidMount() {
@@ -91,6 +94,22 @@ class Events extends Component {
         }
     }
 
+    changeTitleEdit = (event) => {
+        const target = event.target;
+        let title = target.value;
+        this.setState({
+            editTitle: title
+        })
+    }
+
+    changeDescEdit = (event) => {
+        const target = event.target;
+        let desc = target.value;
+        this.setState({
+            editDescription: desc
+        })
+    }
+
     create = (event) => {
         event.preventDefault();
 
@@ -111,6 +130,27 @@ class Events extends Component {
             })
                 .then(res => {
                     this.getMyEvents();
+                })
+                .catch(err => console.log(err));
+        }
+    }
+
+    update(eventID) {
+
+        if (this.state.editTitle === '' || this.state.editDescription === '') {
+            alert('No field should be empty');
+            return;
+        } else {
+            axios.put(EVENT_API + `${eventID}` + '/update/', {
+                title: this.state.editTitle,
+                description: this.state.editDescription
+            })
+                .then(res => {
+                    this.getMyEvents();
+                    this.setState({
+                        editTitle: '',
+                        editDescription: ''
+                    })
                 })
                 .catch(err => console.log(err));
         }
@@ -146,9 +186,9 @@ class Events extends Component {
 
     getScopedEvents(scope) {
         let title = '';
-        if (scope == 1) {
+        if (scope === 1) {
             title = 'Physical'
-        } else if (scope == 2) {
+        } else if (scope === 2) {
             title = 'Emotional'
         } else {
             title = 'Intellectual'
@@ -271,6 +311,9 @@ class Events extends Component {
                                                 user={this.state.user.id}
                                                 id={myEvent.id}
                                                 bio={myEvent.myScopeBio}
+                                                editTitleHandler={this.changeTitleEdit}
+                                                editDescHandler={this.changeDescEdit}
+                                                updateHandler={this.update}
                                             />
                                         ))
                                     }
