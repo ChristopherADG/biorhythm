@@ -12,6 +12,8 @@ export const GET_EVENTS = API_URL + '/api/events/availableEventes/';
 export const GET_MY_EVENTS = API_URL + '/api/events/myevents/';
 export const GET_ORGANIZED_EVENTS = API_URL + '/api/events/organized/';
 export const GET_JOINED_EVENTS = API_URL + '/api/events/joined/';
+export const JOIN_EVENT = API_URL + '/api/events/join/';
+
 
 /* KEYWORDS */
 export const COOKIE_FLAG_KEY = 'bio'
