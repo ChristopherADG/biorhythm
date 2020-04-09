@@ -88,7 +88,7 @@ def custom_event_json(pk, events):
 
     structure = []
     for event in events:
-        bio = Biorhythm(user_requested.birthdate).calculate(target_date=event.date, limit=2)
+        bio = Biorhythm(user_requested.birthdate).calculate(target_date=event.date)
 
         temp_event = {
             'id': event.id,

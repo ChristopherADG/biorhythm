@@ -12,47 +12,48 @@ const SignupForm = (props) => {
                         <div className="card-img-left d-none d-md-flex"></div>
                         <div className="card-body">
                             <h5 className="card-title text-center">Register</h5>
-                            <form>
 
-                                <div className="form-label-group">
-                                    <input name="email" onChange={props.emailHandler} type="email" id="inputEmail" className="form-control" placeholder="Email address" required />
-                                    <label htmlFor="inputEmail">Email address</label>
+                            <form onSubmit={props.submitHandler}>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text" id="basic-addon1">Firstname</span>
+                                    </div>
+                                    <input type="text" className="text form-control" onChange={props.fnameHandler} required aria-describedby="basic-addon1" />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text" id="basic-addon1">Lastname</span>
+                                    </div>
+                                    <input type="text" className="text form-control" onChange={props.lnameHandler} required aria-describedby="basic-addon1" />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text" id="basic-addon1">Email</span>
+                                    </div>
+                                    <input type="email" className="text form-control" onChange={props.emailHandler} required aria-describedby="basic-addon1" />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text" id="basic-addon2">Password</span>
+                                    </div>
+                                    <input type="password" className="text form-control" onChange={props.pwordHandler} required aria-describedby="basic-addon2" />
+                                </div>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text" id="basic-addon2">Confirm</span>
+                                    </div>
+                                    <input type="password" className="text form-control" onChange={props.confpwordHandler} required aria-describedby="basic-addon2" />
                                 </div>
 
-                                <div className="form-label-group">
-                                    <input name="firstname" onChange={props.fnameHandler} type="text" id="inputFirstname" className="form-control" placeholder="Firstname" required />
-                                    <label htmlFor="inputFirstname">Firstname</label>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                        <span className="input-group-text" id="basic-addon2">Birthdate</span>
+                                    </div>
+                                    <input type="date" className="text form-control" onChange={props.bdateHandler} required aria-describedby="basic-addon2" />
                                 </div>
-
-                                <div className="form-label-group">
-                                    <input name="lastname" onChange={props.lnameHandler} type="text" id="inputLastname" className="form-control" placeholder="Lastname" required />
-                                    <label htmlFor="inputLastname">Lastname</label>
-                                </div>
-
-                                <hr />
-
-                                <div className="form-label-group">
-                                    <input name="password" onChange={props.pwordHandler} type="password" id="inputPassword" className="form-control" placeholder="Password" required />
-                                    <label htmlFor="inputPassword">Password</label>
-                                </div>
-
-                                <div className="form-label-group">
-                                    <input type="password" onChange={props.confpwordHandler} id="inputConfirmPassword" className="form-control" placeholder="Password" required />
-                                    <label htmlFor="inputConfirmPassword">Confirm password</label>
-                                </div>
-
-                                <hr />
-
-                                <div className="form-label-group">
-                                    <input name="birthdate" onChange={props.bdateHandler} type="date" id="inputBirthdate" className="form-control" required />
-                                    <label htmlFor="inputBirthdate">Birthdate</label>
-                                </div>
-
-                                <hr className="my-4" />
-
-                                <input className="btn btn-lg btn-primary btn-block text-uppercase" type="submit" value="register" onClick={props.submitHandler} />
-                                <Link to={LOGIN_LINK} className="d-block text-center mt-2 small">Log in</Link>
-
+                                <button type="submit" className="btn btn-primary btn-block">Register</button>
+                                <br />
+                                <p>Have already an account? <Link to={LOGIN_LINK}>Login here</Link></p>
                             </form>
                         </div>
                     </div>

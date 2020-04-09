@@ -34,6 +34,7 @@ class Events extends Component {
         this.getOrganizedEvents = this.getOrganizedEvents.bind(this);
         this.getJoinedEvents = this.getJoinedEvents.bind(this);
         this.update = this.update.bind(this)
+        this.delete = this.delete.bind(this)
     }
 
     componentDidMount() {
@@ -169,6 +170,12 @@ class Events extends Component {
         }
     }
 
+    delete(eventID) {
+        axios.delete(EVENT_API + `${eventID}` + '/delete/')
+            .then(() => { this.getMyEvents() })
+            .catch(err => console.log(err));
+    }
+
     processEvents(events) {
         let finalEvents = [];
         let key = 1;
@@ -271,8 +278,7 @@ class Events extends Component {
     calcBio(targetDate) {
         axios.get(CALC_BIO_API_ROUTE + `/${this.state.user.id}`, {
             params: {
-                target_date: targetDate,
-                limit: 2
+                target_date: targetDate
             }
         })
             .then(res => {
@@ -294,7 +300,6 @@ class Events extends Component {
         return (
             <div>
                 <div className="container-fluid">
-                    <br />
                     <TitleBar title="Events" />
                     <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Create Event
@@ -327,6 +332,7 @@ class Events extends Component {
                                                 editTitleHandler={this.changeTitleEdit}
                                                 editDescHandler={this.changeDescEdit}
                                                 updateHandler={this.update}
+                                                deleteHandler={this.delete}
                                             />
                                         ))
                                     }

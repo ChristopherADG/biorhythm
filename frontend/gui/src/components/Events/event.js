@@ -11,8 +11,13 @@ const Event = (props) => {
                         < i className="material-icons eventIcon">house</i>
                     }
                     {props.owner &&
-                        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={'#editModal' + props.id}>
+                        <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target={'#editModal' + props.id}>
                             < i className="material-icons eventIcon">edit</i>
+                        </button>
+                    }
+                    {props.owner &&
+                        <button type="button" className="btn btn-outline-danger" data-toggle="modal" data-target={'#deleteModal' + props.id}>
+                            < i className="material-icons eventIcon">delete</i>
                         </button>
                     }
                     {!props.public &&
@@ -41,7 +46,7 @@ const Event = (props) => {
                         </div>
                         <div className="col-lg-6">
                             {props.join &&
-                                <p className="card-text"><i className="material-icons lock">favorite</i>Forecast: {props.bio * 100}%</p>
+                                <p className="card-text"><i className="material-icons lock">favorite</i>Forecast: {parseInt(props.bio * 100)}%</p>
                             }
                         </div>
                     </div>
@@ -83,6 +88,20 @@ const Event = (props) => {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => props.updateHandler(props.id)}>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade" id={'deleteModal' + props.id} role="dialog" aria-labelledby="deleteModalLabel" >
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-body">
+                            Are you sure you wish to delete this event?
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => props.deleteHandler(props.id)}>DELETE</button>
                         </div>
                     </div>
                 </div>

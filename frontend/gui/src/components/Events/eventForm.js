@@ -51,7 +51,7 @@ const CreateEvent = (props) => {
                 </div>
                 <p className="col">
                     <span className="bio-label">
-                        {(props.bio.phy !== undefined) ? props.bio.phy * 100 : 0}%
+                        {(props.bio.phy !== undefined) ? parseInt(props.bio.phy * 100) : 0}%
                     </span>
                 </p>
             </div>
@@ -62,7 +62,7 @@ const CreateEvent = (props) => {
                 </div>
                 <p className="col">
                     <span className="bio-label">
-                        {(props.bio.emo !== undefined) ? props.bio.emo * 100 : 0}%
+                        {(props.bio.emo !== undefined) ? parseInt(props.bio.emo * 100) : 0}%
                     </span>
                 </p>
             </div>
@@ -73,7 +73,7 @@ const CreateEvent = (props) => {
                 </div>
                 <p className="col">
                     <span className="bio-label">
-                        {(props.bio.int !== undefined) ? props.bio.int * 100 : 0}%
+                        {(props.bio.int !== undefined) ? parseInt(props.bio.int * 100) : 0}%
                     </span>
                 </p>
             </div>

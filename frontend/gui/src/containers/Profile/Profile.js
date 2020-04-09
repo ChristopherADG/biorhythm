@@ -62,6 +62,7 @@ class Profile extends Component {
                         fname={state.user.name}
                         lname={state.user.lastname}
                         bdate={state.user.birthdate}
+                        email={state.user.email}
                         profilePicture={this.state.profilePicture}
                         onChangeFirstname={this.changeFirstname}
                         onChangeLastname={this.changeLastname}
