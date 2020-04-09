@@ -191,7 +191,7 @@ class Dashboard extends Component {
         axios.get(GET_MY_EVENTS + '?pk=' + state.user.id)
             .then(res => {
                 this.setState({
-                    myEvents: this.processEvents(res.data).slice(0, 3)
+                    myEvents: this.processEvents(res.data).slice(0, 4)
                 })
             })
             .catch(err => console.log(err));

@@ -317,7 +317,7 @@ class Events extends Component {
                                     <br /><br />
                                     {this.state.myEvents.length > 0 &&
                                         this.state.myEvents.map((myEvent) => (
-                                            <Event key={myEvent.key}
+                                            <Event key={myEvent.id}
                                                 title={myEvent.title}
                                                 description={myEvent.description}
                                                 date={myEvent.date}
