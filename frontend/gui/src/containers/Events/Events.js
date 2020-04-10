@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS, JOIN_EVENT, CALC_BIO_API_ROUTE, EVENT_API } from '../../util/constants'
+import { CREATE_EVENT, GET_EVENTS, GET_MY_EVENTS, GET_ORGANIZED_EVENTS, GET_JOINED_EVENTS, JOIN_EVENT, CALC_BIO_API_ROUTE, EVENT_API, UN_JOIN_EVENT } from '../../util/constants'
 import TitleBar from '../../components/TitleBar/TitleBar';
 import UserContext from '../../context/user-context'
 import Event from '../../components/Events/event'
@@ -176,6 +176,19 @@ class Events extends Component {
             .catch(err => console.log(err));
     }
 
+    unJoin = (event, user) => {
+        axios.post(UN_JOIN_EVENT, {
+            event: event,
+            user: user
+        })
+            .then(res => {
+                this.getJoinedEvents();
+                this.getEvents();
+            })
+            .catch(err => console.log(err));
+
+    }
+
     processEvents(events) {
         let finalEvents = [];
         let key = 1;
@@ -333,6 +346,7 @@ class Events extends Component {
                                                 editDescHandler={this.changeDescEdit}
                                                 updateHandler={this.update}
                                                 deleteHandler={this.delete}
+                                                unJoinHandler={this.unJoin}
                                             />
                                         ))
                                     }
