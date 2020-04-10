@@ -47,8 +47,6 @@ const Event = (props) => {
                             {!props.joinable && !props.owner &&
                                 <button type="button" className="btn btn-outline-warning" data-toggle="modal" data-target={'#unJoinModal' + props.id}>Unjoin</button>
                             }
-                                <button type="button" className="btn btn-outline-warning">Unjoin</button>
-                            }
                             {props.owner &&
                                 <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target={'#editModal' + props.id}>
                                     < i className="material-icons eventIcon">edit</i>
