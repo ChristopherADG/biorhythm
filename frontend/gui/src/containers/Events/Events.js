@@ -172,7 +172,9 @@ class Events extends Component {
 
     delete(eventID) {
         axios.delete(EVENT_API + `${eventID}` + '/delete/')
-            .then(() => { this.getMyEvents() })
+            .then(() => {
+                this.getMyEvents()
+            })
             .catch(err => console.log(err));
     }
 
@@ -300,11 +302,16 @@ class Events extends Component {
         return (
             <div>
                 <div className="container-fluid">
-                    <TitleBar title="Events" />
-                    <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        Create Event
-                    </button>
-                    <div className="row">
+                    <div className="bar">
+                        <br />
+                        <h4 className="eventCreate">
+                            Events
+                            <button type="button" className="btn btn-primary eventIcon" data-toggle="modal" data-target="#exampleModal">
+                                Create Event
+                            </button>
+                        </h4>
+                    </div>
+                    <div className="row eventsTitle">
                         <div className="offset-lg-1 col-lg-5">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -315,34 +322,38 @@ class Events extends Component {
                                         <button type="button" className="btn btn-secondary" onClick={this.getJoinedEvents}>Joined</button>
                                     </div>
                                     <br /><br />
-                                    {this.state.myEvents.length > 0 &&
-                                        this.state.myEvents.map((myEvent) => (
-                                            <Event key={myEvent.id}
-                                                title={myEvent.title}
-                                                description={myEvent.description}
-                                                date={myEvent.date}
-                                                public={myEvent.isPublic}
-                                                scope={myEvent.scope}
-                                                owner={myEvent.creator + '' === state.user.id + ''}
-                                                joinable={false}
-                                                join={this.join}
-                                                user={this.state.user.id}
-                                                id={myEvent.id}
-                                                bio={myEvent.myScopeBio}
-                                                editTitleHandler={this.changeTitleEdit}
-                                                editDescHandler={this.changeDescEdit}
-                                                updateHandler={this.update}
-                                                deleteHandler={this.delete}
-                                            />
-                                        ))
-                                    }
-                                    {this.state.myEvents.length < 1 &&
-                                        <h6 className="text-center">No Events</h6>
-                                    }
+                                    <div className="row">
+                                        <div className="offset-lg-2 col-lg-8">
+                                            {this.state.myEvents.length > 0 &&
+                                                this.state.myEvents.map((myEvent) => (
+                                                    <Event key={myEvent.id}
+                                                        title={myEvent.title}
+                                                        description={myEvent.description}
+                                                        date={myEvent.date}
+                                                        public={myEvent.isPublic}
+                                                        scope={myEvent.scope}
+                                                        owner={myEvent.creator + '' === state.user.id + ''}
+                                                        joinable={false}
+                                                        join={this.join}
+                                                        user={this.state.user.id}
+                                                        id={myEvent.id}
+                                                        bio={myEvent.myScopeBio}
+                                                        editTitleHandler={this.changeTitleEdit}
+                                                        editDescHandler={this.changeDescEdit}
+                                                        updateHandler={this.update}
+                                                        deleteHandler={this.delete}
+                                                    />
+                                                ))
+                                            }
+                                            {this.state.myEvents.length < 1 &&
+                                                <h6 className="text-center">No Events</h6>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-5">
+                        <div className="col-lg-5 availableSeparator">
                             <div className="row">
                                 <div className="col-lg-12">
                                     <h3>Available Events - <span>{this.state.availableState}</span></h3><hr />
@@ -353,26 +364,30 @@ class Events extends Component {
                                         <button onClick={() => this.getScopedEvents(3)} type="button" className="btn btn-secondary">Intellectual</button>
                                     </div>
                                     <br /><br />
-                                    {this.state.events.length > 0 &&
-                                        this.state.events.map((post) => (
-                                            <Event
-                                                key={post.id}
-                                                title={post.title}
-                                                description={post.description}
-                                                date={post.date}
-                                                public={post.isPublic}
-                                                scope={post.scope}
-                                                owner={post.creator === state.user.id}
-                                                join={this.join}
-                                                joinable={true}
-                                                user={this.state.user.id}
-                                                id={post.id}
-                                                bio={post.myScopeBio}
-                                            />
-                                        ))
-                                    }
+                                    <div className="row">
+                                        <div className="offset-lg-2 col-lg-8">
+                                            {this.state.events.length > 0 &&
+                                                this.state.events.map((post) => (
+                                                    <Event
+                                                        key={post.id}
+                                                        title={post.title}
+                                                        description={post.description}
+                                                        date={post.date}
+                                                        public={post.isPublic}
+                                                        scope={post.scope}
+                                                        owner={post.creator === state.user.id}
+                                                        join={this.join}
+                                                        joinable={true}
+                                                        user={this.state.user.id}
+                                                        id={post.id}
+                                                        bio={post.myScopeBio}
+                                                    />
+                                                ))
+                                            }
+                                        </div></div>
+
                                     {this.state.events.length < 1 &&
-                                        <h6 className="text-center">No Events</h6>
+                                        <h6 className="text-center mobileMarginNoEvents">No Events</h6>
                                     }
                                 </div>
                             </div>
