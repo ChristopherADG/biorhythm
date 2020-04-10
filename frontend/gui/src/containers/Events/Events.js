@@ -326,7 +326,7 @@ class Events extends Component {
                                         <div className="offset-lg-2 col-lg-8">
                                             {this.state.myEvents.length > 0 &&
                                                 this.state.myEvents.map((myEvent) => (
-                                                    <Event key={myEvent.key}
+                                                    <Event key={myEvent.id}
                                                         title={myEvent.title}
                                                         description={myEvent.description}
                                                         date={myEvent.date}

@@ -2,7 +2,7 @@ import React from 'react';
 import EventElement from './EventElement/EventElement';
 
 
-const EventsBox = () => {
+const EventsBox = (props) => {
     return (
         <div className="box">
             <div className="container">
@@ -11,11 +11,16 @@ const EventsBox = () => {
                         <h5>Next Events</h5>
                     </div>
                     <div className="row">
-                        <p className="subtitle">5 days from now</p>
+                        <p className="subtitle"></p>
                     </div>
-                    <EventElement name="Marcha para que los chinos dejen de comer chihuahuas voladores" />
-                    <EventElement name="Marcha para que los chinos dejen de comer chihuahuas voladores" />
-                    <EventElement name="Marcha para que los chinos dejen de comer chihuahuas voladores" />
+                    {props.myEvents.length > 0 &&
+                        props.myEvents.map((myEvent) => (
+                            <EventElement key={myEvent.id} name={myEvent.title} date={myEvent.date} scope={myEvent.scope} />
+                        ))
+                    }
+                    {props.myEvents.length < 1 &&
+                        <h6 className="text-center">No Events</h6>
+                    }
                 </div>
             </div>
         </div>

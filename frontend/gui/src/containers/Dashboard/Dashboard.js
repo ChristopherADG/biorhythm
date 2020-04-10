@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { CALC_BIO_API_ROUTE } from '../../util/constants'
+import { CALC_BIO_API_ROUTE, GET_MY_EVENTS } from '../../util/constants'
 import SingleBioBox from '../../components/Dashboard/SingleBioBox/SingleBioBox';
 import './Dashboard.css'
 import TitleBar from '../../components/TitleBar/TitleBar';
@@ -17,7 +17,8 @@ class Dashboard extends Component {
         listBioRhythm: [],
         tempDate: '',
         dateStr: 'Today',
-        bigChartData: {}
+        bigChartData: {},
+        myEvents: []
     }
 
     componentDidMount() {
@@ -54,6 +55,8 @@ class Dashboard extends Component {
                 this.prepareListData()
             })
             .catch(err => console.log(err));
+
+        this.getMyEvents()
     }
 
     render() {
@@ -81,7 +84,7 @@ class Dashboard extends Component {
                                     />
                                 </div>
                                 <div className="col-lg-12">
-                                    <EventsBox />
+                                    <EventsBox myEvents={this.state.myEvents} />
                                 </div>
                             </div>
                         </div>
@@ -181,6 +184,34 @@ class Dashboard extends Component {
                 })
                 .catch(err => console.log(err));
         }
+    }
+
+    getMyEvents() {
+        const { state } = this.context
+        axios.get(GET_MY_EVENTS + '?pk=' + state.user.id)
+            .then(res => {
+                this.setState({
+                    myEvents: this.processEvents(res.data).slice(0, 4)
+                })
+            })
+            .catch(err => console.log(err));
+    }
+
+    processEvents(events) {
+        let finalEvents = [];
+        let key = 1;
+        events.forEach(element => {
+            element.key = key;
+            finalEvents.push(element)
+            key++;
+        });
+
+        finalEvents.sort((a, b) => {
+            let temp1 = new Date(a.date).getTime();
+            let temp2 = new Date(b.date).getTime();
+            return temp1 - temp2;
+        })
+        return finalEvents;
     }
 
 
