@@ -45,6 +45,8 @@ const Event = (props) => {
                                 <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target={'#joinModal' + props.id}>Join</button>
                             }
                             {!props.joinable && !props.owner &&
+                                <button type="button" className="btn btn-outline-warning" data-toggle="modal" data-target={'#unJoinModal' + props.id}>Unjoin</button>
+                            }
                                 <button type="button" className="btn btn-outline-warning">Unjoin</button>
                             }
                             {props.owner &&
@@ -96,6 +98,20 @@ const Event = (props) => {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => props.join(props.id, props.user)}>OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade" id={'unJoinModal' + props.id} role="dialog" aria-labelledby="unJoinModalLabel" >
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-body">
+                            Are you sure?
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => props.unJoinHandler(props.id, props.user)}>OK</button>
                         </div>
                     </div>
                 </div>

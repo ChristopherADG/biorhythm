@@ -81,6 +81,19 @@ class EventJoinedListView(APIView):
         return Response(custom_event_json(pk, events), status=status.HTTP_200_OK)
 
 
+class EventDeleteJoinView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        event_id = request.data.get('event', None)
+        user_id = request.data.get('user', None)
+
+        EventParticipant.objects.filter(user=user_id, event=event_id).delete()
+
+        return Response({'status': 'object removed'}, status=status.HTTP_204_NO_CONTENT)
+
+
 def custom_event_json(pk, events):
     user_requested = get_user_by_pk(pk)
     if not user_requested:
