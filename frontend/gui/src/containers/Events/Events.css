@@ -29,3 +29,37 @@
     border-radius: 25%;
     border: 1px solid lightblue;
   }
+
+  .spaceBtn{
+    margin-left: 2%;
+}
+
+.eventsTitle{
+  margin-top: 2%;
+}
+.eventSepartion{
+  margin-bottom: 3%;
+}
+
+
+
+@media (max-width : 575px) {
+  .space-sm{
+    margin-bottom: 8%;
+  }
+  .eventsTitle{
+    margin-top: 10%;
+  }
+  .availableSeparator{
+    padding-top: 5%;
+      border-top: solid;
+  }
+
+  .eventCreate{
+    margin-bottom: 6%;
+  }
+
+  .mobileMarginNoEvents{
+    margin-bottom: 35%;
+  }
+}
