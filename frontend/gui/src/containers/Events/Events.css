@@ -1,0 +1,65 @@
+
+  .datepicker{
+      height: 100% !important;
+  }
+  
+  .isPublic{
+    height: 100% !important;
+    margin-left: .5rem;
+    margin-right: .5rem;
+  }
+
+  .event{
+    text-align: left !important;
+  }
+
+  .eventIcon{
+    float: right;
+  }
+
+  .lock{
+    color: red;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+
+  .clickable:hover {
+    border-radius: 25%;
+    border: 1px solid lightblue;
+  }
+
+  .spaceBtn{
+    margin-left: 2%;
+}
+
+.eventsTitle{
+  margin-top: 2%;
+}
+.eventSepartion{
+  margin-bottom: 3%;
+}
+
+
+
+@media (max-width : 575px) {
+  .space-sm{
+    margin-bottom: 8%;
+  }
+  .eventsTitle{
+    margin-top: 10%;
+  }
+  .availableSeparator{
+    padding-top: 5%;
+      border-top: solid;
+  }
+
+  .eventCreate{
+    margin-bottom: 6%;
+  }
+
+  .mobileMarginNoEvents{
+    margin-bottom: 35%;
+  }
+}

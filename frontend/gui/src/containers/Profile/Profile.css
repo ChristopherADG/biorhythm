@@ -1,0 +1,86 @@
+.slim-box {
+    width: 60%;
+    margin: 5px auto;
+    background-color: #FFFFFF;
+    border: 1px solid #F8F7F8;
+    min-height: 200px;
+    max-height: 370px;
+}
+
+.profileCircle {
+    background-color: #FFF;
+    border: 3px solid #F80;
+    border-radius: 50%;
+    box-shadow: 0 0 2px #888;
+    width: 180px;
+    height: 180px;
+    margin-top: 10px;
+    margin-left: 20%;
+    /*background-image: url('https://pbs.twimg.com/profile_images/1188507013233479681/WuNwaQ8R_400x400.jpg'); */
+    background-size: 120px;
+}
+
+#name {
+    font-size: 1.2em;
+}
+
+#email {
+    color: #2FA1F1;
+}
+
+.spaceBtn{
+    margin-left: 2%;
+}
+
+.inner-content-profile {
+    margin: 5% auto;
+    width: 75%;
+}
+
+.center {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#write-only-profile {
+    display: none;
+}
+
+.space {
+    width: 10px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#editable-img:hover {
+    cursor: pointer;
+    opacity: .3;
+}
+
+@media only screen and (max-width: 1200px) {
+    .slim-box {
+        width: 100%;
+        margin: 5px auto;
+        background-color: #FFFFFF;
+        border: 1px solid #F8F7F8;
+        min-height: 200px;
+        max-height: 500px;
+    }
+}
+
+@media only screen and (max-width: 760px) {
+
+    .profileCircle {
+        background-color: #FFF;
+        border: 3px solid #F80;
+        border-radius: 50%;
+        box-shadow: 0 0 2px #888;
+        width: 120px;
+        height: 120px;
+        margin-top: 10px;
+        background-size: 120px;
+        margin: 0 auto;
+    }
+}
