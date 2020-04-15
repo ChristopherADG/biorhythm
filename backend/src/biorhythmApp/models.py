@@ -3,7 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class User(models.Model):
-    email = models.CharField(max_length=120)
+    email = models.CharField(max_length=120, unique=True)
     password = models.CharField(max_length=120)
     firstname = models.CharField(max_length=120)
     lastname = models.CharField(max_length=120)
