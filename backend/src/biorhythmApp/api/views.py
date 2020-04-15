@@ -4,7 +4,6 @@ from biorhythmApp.models import User, Event, EventParticipant
 from .serializers import UserSerializer, EventSerializer, SimpleUserSerializer, EventParticipantSerializer, SimpleEventSerializer
 
 
-# USER
 class UserListView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
